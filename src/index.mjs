@@ -1,13 +1,17 @@
+import path from 'node:path';
 import nodeevents from 'node:events';
+import { fileURLToPath } from 'node:url';
 import { config } from 'dotenv';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
+import { _log } from './utils.mjs';
 import glob from 'glob';
-import { _log } from './utils.js';
 import forEach from 'lodash.foreach';
 
-nodeevents.setMaxListeners(150);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+nodeevents.setMaxListeners(150);
 config();
 
 const api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
@@ -16,10 +20,15 @@ const commandsData = [];
 function getCommandFiles () {
   const files = glob.sync('../commands/**/*.js', { cwd: __dirname });
   if (files.length) {
-    forEach(files, file => {
-      _log(file);
-      if (fileRequired.hasOwnProperty('data')) {
-        commandsData.push(fileRequired.data.toJSON());
+    forEach(files, async file => {
+      const fileRequired = await import(file);
+      const hasDataProperty = Object.keys(fileRequired).some(
+        prop => prop === 'data'
+      );
+      console.debug(hasDataProperty);
+      if (hasDataProperty) {
+        _log(file);
+        commandsData.push(fileRequired.default.data.toJSON());
       }
     });
   } else {

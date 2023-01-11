@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "description": "",
   "main": "cli.js",
-  "type": "module",
   "scripts": {
-    "dev": "nodemon cli.js scan"
+    "dev": "nodemon cli.mjs scan"
   },
   "keywords": [],
   "author": "",
