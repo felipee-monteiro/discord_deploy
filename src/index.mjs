@@ -1,43 +1,31 @@
 import path from 'node:path';
 import nodeevents from 'node:events';
 import { fileURLToPath } from 'node:url';
-import { config } from 'dotenv';
-import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v10';
-import { _log } from './utils.mjs';
+import { validateCommandObject, _log } from './utils.mjs';
 import glob from 'glob';
 import forEach from 'lodash.foreach';
+import { config } from 'dotenv';
+import { REST, Routes } from 'discord.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+var __filename = fileURLToPath(import.meta.url);
+var __dirname = path.dirname(__filename);
 
 nodeevents.setMaxListeners(150);
 config();
 
-const api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
-const commandsData = [];
+var api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
 
-function getCommandFiles () {
-  const files = glob.sync('../commands/**/*.js', { cwd: __dirname });
-  if (files.length) {
-    forEach(files, async file => {
-      const fileRequired = await import(file);
-      const hasDataProperty = Object.keys(fileRequired).some(
-        prop => prop === 'data'
-      );
-      console.debug(hasDataProperty);
-      if (hasDataProperty) {
-        _log(file);
-        commandsData.push(fileRequired.default.data.toJSON());
-      }
-    });
-  } else {
-    throw new Error('File doesnt exists.');
+async function getCommandFiles () {
+  var commandsData = [];
+  var files = glob.sync('../commands/**/*.js', { cwd: __dirname });
+  for (let file of files) {
+    commandsData.push(validateCommandObject(await import(file)));
   }
+  return commandsData.filter(cmd => typeof cmd !== 'undefined');
 }
 
 async function deploy () {
-  getCommandFiles();
+  const commandsData = await getCommandFiles();
   try {
     const resolved = await api.put(
       Routes.applicationGuildCommands(
@@ -48,7 +36,10 @@ async function deploy () {
         body: commandsData
       }
     );
-    forEach(resolved, result => _log('Added: ' + result.name));
+    resolved.length
+      ? _log('Deployed Success!')
+      : _log('Error while tryng deploy files.');
+    process.exit(0);
   } catch (e) {
     throw new Error(e);
   }
