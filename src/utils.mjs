@@ -1,4 +1,3 @@
-import { SlashCommandBuilder } from 'discord.js';
 import colors from 'ansi-styles';
 
 var _logLevels = [
@@ -29,17 +28,5 @@ export const _log = function (message, level = 'info') {
       message,
       colors[_logProps.color]['close']
     );
-  }
-};
-export const validateCommandObject = function (obj) {
-  for (const key in obj) {
-    if (
-      Object.hasOwnProperty.call(obj[key], 'data') &&
-      obj[key].data instanceof SlashCommandBuilder
-    ) {
-      var file = obj[key].data;
-      _log(file['name']);
-      return file.toJSON();
-    }
   }
 };
