@@ -1,13 +1,9 @@
-import { dirname } from 'node:path';
 import nodeevents from 'node:events';
-import { fileURLToPath } from 'node:url';
-import { _log } from './utils.mjs';
-import glob from 'glob';
+import { relative, join, normalize, isAbsolute } from 'node:path';
+import { _log, __dirname } from './utils.mjs';
+import glob from 'fast-glob';
 import { config } from 'dotenv';
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
-
-var __filename = fileURLToPath(import.meta.url);
-var __dirname = dirname(__filename);
 
 nodeevents.setMaxListeners(150);
 config();
@@ -28,16 +24,26 @@ function validateCommandObject (obj) {
   }
 }
 
-async function getCommandFiles () {
-  var files = glob.sync('../commands/**/*.js', { cwd: __dirname });
-  for (let file of files) {
-    validateCommandObject(await import(file));
+async function getCommandFiles (cwd) {
+  var commandsPath = relative(__dirname, join(cwd, 'commands')).split('\\')[0];
+  var jsFilesPath = `${commandsPath}/commands/**/*.{js,mjs}`;
+  var files = await glob(jsFilesPath, {
+    cwd: __dirname,
+    absolute: isAbsolute(jsFilesPath)
+  });
+  if (files.length) {
+    for (let file of files) {
+      validateCommandObject(await import(file));
+    }
+  } else {
+    _log('Files not found. path: ' + cwd, 'error');
+    process.exit(1);
   }
 }
 
-async function deploy () {
+async function deploy (options) {
   try {
-    await getCommandFiles();
+    await getCommandFiles(options.cwd);
     const resolved = await api.put(
       Routes.applicationGuildCommands(
         process.env['CLIENT_ID'],
@@ -47,12 +53,11 @@ async function deploy () {
         body: commandsData
       }
     );
-    resolved.length
-      ? _log('Deployed Success!')
-      : _log('Error while tryng deploy files.', 'error');
+    _log('Deployed Success!');
     process.exit(0);
   } catch (e) {
     _log(e, 'error');
+    process.exit(1);
   }
 }
 export default deploy;
