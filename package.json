@@ -18,7 +18,6 @@
   "dependencies": {
     "@discordjs/rest": "^1.5.0",
     "ansi-styles": "^6.2.1",
-    "chalk": "^5.2.0",
     "commander": "^9.5.0",
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
