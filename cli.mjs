@@ -10,8 +10,8 @@ program
 program.addHelpCommand('--help', 'CLI help.');
 program.showSuggestionAfterError(true);
 program
-  .command('scan')
-  .alias('s')
+  .command('deploy')
+  .alias('d')
   .option('-d, --debug', 'run in debug mode.', false)
   .option('--cwd <dir>', 'directory to searches for.', process.cwd())
   .description('Scan and deploy files.')
