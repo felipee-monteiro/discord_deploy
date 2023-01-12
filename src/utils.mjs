@@ -1,3 +1,5 @@
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import colors from 'ansi-styles';
 
 var _logLevels = [
@@ -19,6 +21,7 @@ var _logLevels = [
 ];
 
 var debugMode = process.argv.some(arg => arg === '--debug');
+
 export const _log = function (message, level = 'info') {
   var _logProps = _logLevels.find(log => log.level === level);
   if (debugMode && _logProps) {
@@ -30,3 +33,6 @@ export const _log = function (message, level = 'info') {
     );
   }
 };
+
+export const __filename = fileURLToPath(import.meta.url);
+export const __dirname = dirname(__filename);
