@@ -1,0 +1,11 @@
+{
+     "exlude": [
+          "node_modules"
+     ],
+     "include": [
+          "cli.mjs"
+     ],
+     "buildOptions": {
+          "dry": true
+     }
+}
