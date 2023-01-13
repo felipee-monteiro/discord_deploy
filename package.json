@@ -4,7 +4,7 @@
   "description": "",
   "main": "cli.js",
   "scripts": {
-    "dev": "nodemon cli.mjs scan"
+    "dev": "nodemon cli.mjs deploy --debug"
   },
   "keywords": [],
   "author": "felipee-monteiro",
@@ -22,6 +22,6 @@
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
-    "lodash.foreach": "^4.5.0"
+    "normalize-path": "^3.0.0"
   }
 }
