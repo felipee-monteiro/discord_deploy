@@ -7,7 +7,7 @@
     "dev": "nodemon cli.mjs scan"
   },
   "keywords": [],
-  "author": "",
+  "author": "felipee-monteiro",
   "license": "ISC",
   "devDependencies": {
     "cjstoesm": "^2.1.2",
