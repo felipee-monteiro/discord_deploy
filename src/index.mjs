@@ -1,9 +1,9 @@
-import nodeevents from 'node:events';
-import { relative, join, normalize, isAbsolute } from 'node:path';
-import { _log, __dirname } from './utils.mjs';
 import glob from 'fast-glob';
+import path from 'node:path';
 import { config } from 'dotenv';
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
+import { unixify, _log, __dirname } from './utils.mjs';
+import nodeevents from 'node:events';
 
 nodeevents.setMaxListeners(150);
 config();
@@ -18,25 +18,27 @@ function validateCommandObject (obj) {
       obj[key].data instanceof SlashCommandBuilder
     ) {
       var file = obj[key].data;
-      _log(file['name']);
       commandsData.push(file.toJSON());
+      _log('Success Deployed: ' + file['name']);
     }
   }
 }
 
 async function getCommandFiles (cwd) {
-  var commandsPath = relative(__dirname, join(cwd, 'commands')).split('\\')[0];
-  var jsFilesPath = `${commandsPath}/commands/**/*.{js,mjs}`;
-  var files = await glob(jsFilesPath, {
-    cwd: __dirname,
-    absolute: isAbsolute(jsFilesPath)
+  var files = await glob('**/commands/**', {
+    cwd,
+    globstar: true,
+    absolute: true,
+    ignore: ['node_modules', '**/node_modules/**', unixify(__dirname)]
   });
   if (files.length) {
     for (let file of files) {
-      validateCommandObject(await import(file));
+      validateCommandObject(
+        await import(unixify(path.relative(__dirname, file)))
+      );
     }
   } else {
-    _log('Files not found. path: ' + cwd, 'error');
+    _log('Dir not found. path: ' + jsFilesPath, 'error');
     process.exit(1);
   }
 }
