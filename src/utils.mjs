@@ -1,4 +1,4 @@
-import { dirname } from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import colors from 'ansi-styles';
 
@@ -34,5 +34,11 @@ export const _log = function (message, level = 'info') {
   }
 };
 
+export function unixify (windowsPath) {
+  return windowsPath.includes(path.win32.sep)
+    ? windowsPath.replace(/\\/g, '/')
+    : new TypeError('Path must be a Windows Path');
+}
+
 export const __filename = fileURLToPath(import.meta.url);
-export const __dirname = dirname(__filename);
+export const __dirname = path.dirname(__filename);
