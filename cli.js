@@ -7,7 +7,6 @@ program
   .description(cli.default.description)
   .version(`${cli.default.name}@${cli.default.version}.`);
 program.addHelpCommand('--help', 'CLI help.');
-program.showSuggestionAfterError(true);
 program
   .command('deploy')
   .alias('d')
@@ -15,10 +14,9 @@ program
   .option('--cwd <dir>', 'Absolute directory to searches for.', process.cwd())
   .option(
     '--test',
-    'Enables test mode (Requires GUILD_TEST_ID env key). defaults to false.',
+    'Enables test mode (Requires GUILD_TEST_ID env key).',
     false
   )
   .description('Scan and deploy files.')
   .action(deploy);
-
 program.parse();
