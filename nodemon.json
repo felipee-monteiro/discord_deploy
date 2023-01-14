@@ -1,6 +1,10 @@
 {
     "verbose": true,
+    "exec": "node cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "ignore": [
-        "node_modules"
+        "**/.git/**",
+        "**/node_modules/**",
+        "**/commands/**",
+        "*.json"
     ]
 }

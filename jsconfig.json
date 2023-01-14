@@ -1,11 +1,10 @@
 {
      "exlude": [
-          "node_modules"
+          "node_modules",
+          "src",
+          ".git"
      ],
      "include": [
-          "cli.mjs"
+          "cli.js"
      ],
-     "buildOptions": {
-          "dry": true
-     }
 }

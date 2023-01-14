@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "description": "",
   "main": "cli.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon cli.mjs deploy --debug"
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "felipee-monteiro",
   "license": "ISC",
   "devDependencies": {
-    "cjstoesm": "^2.1.2",
     "discord.js": "^14.7.1",
     "nodemon": "^2.0.20",
     "prettier": "2.8.2"
