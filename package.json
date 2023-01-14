@@ -1,10 +1,12 @@
 {
   "name": "discord_deploy",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "files": [
     "index.js"
   ],
-  "bin": "./bin/index.js",
+  "bin": {
+    "discord_deploy": "./bin/cli.js"
+  },
   "description": "Deplouy slash commands easily.",
   "main": "index.js",
   "type": "module",
