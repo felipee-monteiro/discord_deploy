@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "0.1.8",
+  "version": "0.1.7",
   "files": [
     "index.js"
   ],
