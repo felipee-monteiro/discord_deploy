@@ -5,7 +5,7 @@
     "discord_deploy": "./bin/cli.js"
   },
   "description": "Deploy slash commands easily.",
-  "main": "cli.js",
+  "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
