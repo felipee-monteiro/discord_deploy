@@ -1,15 +1,15 @@
 {
   "name": "discord_deploy",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "bin": {
-    "discord_deploy": "./cli.js"
+    "discord_deploy": "./bin/cli.js"
   },
   "description": "Deploy slash commands easily.",
   "main": "cli.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build": "esbuild cli.js --minify --platform=node --format=esm  --packages=external --outdir=bin",
+    "build": "rollup --config",
     "prepack": "npm run build",
     "prepublish:npm": "npm run build",
     "publish:npm": "npm publish --access public"
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@discordjs/rest": "^1.5.0",
+    "@rollup/plugin-json": "^6.0.0",
     "ansi-styles": "^6.2.1",
     "commander": "^9.5.0",
     "discord-api-types": "^0.37.27",
