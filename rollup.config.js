@@ -1,12 +1,13 @@
 import os from 'node:os';
 import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
+import shebang from 'rollup-plugin-add-shebang';
 
 export default {
   input: './cli.js',
   output: {
     dir: 'bin',
-    format: 'es'
+    inlineDynamicImports: true
   },
   external: [
     'commander',
@@ -21,6 +22,7 @@ export default {
   ],
   plugins: [
     json({ compact: true }),
-    terser({ maxWorkers: os.cpus().length, toplevel: true })
+    terser({ maxWorkers: os.cpus().length, toplevel: true }),
+    shebang()
   ]
 };
