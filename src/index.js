@@ -1,9 +1,9 @@
 import glob from 'fast-glob';
-import path from 'node:path';
+import { resolve, relative } from 'node:path';
 import normalize from 'normalize-path';
 import { config } from 'dotenv';
 import { REST } from '@discordjs/rest';
-import { Routes } from 'discordjs-api-types/v10';
+import { Routes } from 'discord-api-types/v10';
 import utils from './utils.js';
 
 const { _log, __dirname } = utils;
@@ -29,7 +29,7 @@ async function getCommandFiles (cwd) {
     for (let file of files) {
       _log('Processing: ' + file);
       const { default: fileRequired } = await import(
-        normalize(path.relative(__dirname, file))
+        normalize(relative(__dirname, file))
       );
       validateCommandObject(fileRequired);
     }
@@ -41,7 +41,7 @@ async function getCommandFiles (cwd) {
 
 async function deploy ({ cwd, debug, test }) {
   config({
-    path: path.resolve(cwd, '.env'),
+    path: resolve(cwd, '.env'),
     debug
   });
   try {
