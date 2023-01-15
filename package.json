@@ -9,12 +9,10 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build": "esbuild cli.js --bundle --platform=node --format=esm  --packages=external --outdir=bin --minify",
+    "build": "esbuild cli.js --minify --platform=node --format=esm  --packages=external --outdir=bin",
     "prepack": "npm run build",
     "prepublish:npm": "npm run build",
-    "publish:npm": "npm publish --access public",
-    "release": "release-it",
-    "test": "discord_deploy --help"
+    "publish:npm": "npm publish --access public"
   },
   "keywords": [],
   "author": "felipee-monteiro",
@@ -28,12 +26,11 @@
     "@discordjs/rest": "^1.5.0",
     "ansi-styles": "^6.2.1",
     "commander": "^9.5.0",
-    "discord_deploy": "^0.1.8",
+    "discord_deploy": "^0.1.9",
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.0",
     "fast-glob": "^3.2.12",
-    "normalize-path": "^3.0.0",
-    "release-it": "^15.6.0"
+    "normalize-path": "^3.0.0"
   }
 }
