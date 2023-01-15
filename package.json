@@ -1,11 +1,11 @@
 {
   "name": "discord_deploy",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
   "description": "Deploy slash commands easily.",
-  "main": "cli.js",
+  "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
