@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import deploy from './src/index.js';
 import { program, Command } from 'commander';
 import * as cli from './package.json' assert { type: 'json' };
@@ -24,7 +23,7 @@ program
         'Enables test mode (Requires GUILD_TEST_ID env key).',
         false
       )
-      .description('Deploy your commands files (Needs "TOKEN" variable in .env)')
+      .description('Deploy your commands files by searching for "commands" directory in your project. (ATTENTION: Needs "TOKEN" variable in .env)')
       .action(deploy)
   )
   .parse(process.argv);
