@@ -18,7 +18,8 @@ export default {
     'node:url',
     'dotenv',
     'normalize-path',
-    'node:path'
+    'node:path',
+    'update-notifier'
   ],
   plugins: [
     json({ compact: true }),
