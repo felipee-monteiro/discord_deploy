@@ -9,6 +9,11 @@ var _logLevels = [
     prefix: '[INFO]'
   },
   {
+    level: 'log',
+    color: 'greenBright',
+    prefix: '[SUCCESS]'
+  },
+  {
     level: 'warn',
     color: 'yellow',
     prefix: '[WARNING]'

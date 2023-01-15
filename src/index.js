@@ -34,7 +34,7 @@ async function getCommandFiles (cwd) {
       validateCommandObject(fileRequired);
     }
   } else {
-    _log('"commands" dir not found. path: ' + cwd, 'error');
+    _log('"commands" dir not found. Base Path: ' + cwd, 'error');
     process.exit(1);
   }
 }
@@ -45,7 +45,7 @@ async function deploy ({ cwd, debug, test }) {
     debug
   });
   try {
-    void (await getCommandFiles(cwd));
+    await getCommandFiles(cwd);
     var api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
     const resolved = await api.put(
       Routes.applicationGuildCommands(
@@ -57,7 +57,7 @@ async function deploy ({ cwd, debug, test }) {
       }
     );
     resolved.length
-      ? _log('Deployed Success!')
+      ? resolved.forEach(({name}) => _log('Deployed: ' + name, 'log'))
       : _log('Failed to push some refs.', 'error');
     process.exit(0);
   } catch (e) {
