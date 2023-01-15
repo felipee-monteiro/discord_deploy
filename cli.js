@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import deploy from './src/index.js';
 import { program, Command } from 'commander';
 import * as cli from './package.json' assert { type: 'json' };
