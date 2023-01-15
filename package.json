@@ -26,7 +26,6 @@
     "@discordjs/rest": "^1.5.0",
     "ansi-styles": "^6.2.1",
     "commander": "^9.5.0",
-    "discord_deploy": "^0.1.9",
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.0",
