@@ -1,10 +1,10 @@
 {
   "name": "discord_deploy",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
-  "description": "Deploy slash commands easily.",
+  "description": "A CLI to deploy slash commands easily.",
   "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
@@ -17,7 +17,9 @@
   "keywords": [
     "slash commands",
     "discord",
-    "discord deploy"
+    "cli",
+    "bot",
+    "deploy"
   ],
   "author": "felipee-monteiro",
   "license": "ISC",
@@ -35,6 +37,7 @@
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
-    "normalize-path": "^3.0.0"
+    "normalize-path": "^3.0.0",
+    "update-notifier": "^6.0.2"
   }
 }
