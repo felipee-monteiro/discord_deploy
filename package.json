@@ -1,9 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "0.1.7",
-  "files": [
-    "index.js"
-  ],
+  "version": "0.1.8",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
@@ -31,7 +28,7 @@
     "@discordjs/rest": "^1.5.0",
     "ansi-styles": "^6.2.1",
     "commander": "^9.5.0",
-    "discord_deploy": "^0.1.7",
+    "discord_deploy": "^0.1.8",
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.0",
