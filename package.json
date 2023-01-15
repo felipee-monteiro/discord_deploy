@@ -1,27 +1,32 @@
 {
   "name": "discord_deploy",
-  "version": "0.2.2",
+  "version": "0.2.6",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
   "description": "Deploy slash commands easily.",
-  "main": "./bin/cli.js",
+  "main": "cli.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
     "build": "rollup --config",
     "prepack": "npm run build",
-    "prepublish:npm": "npm run build",
+    "prepublish": "npm run build",
     "publish:npm": "npm publish --access public"
   },
-  "keywords": [],
+  "keywords": [
+    "slash commands",
+    "discord",
+    "discord deploy"
+  ],
   "author": "felipee-monteiro",
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-terser": "^0.3.0",
     "nodemon": "^2.0.20",
-    "prettier": "2.8.2"
+    "prettier": "2.8.2",
+    "rollup-plugin-add-shebang": "^0.3.1"
   },
   "dependencies": {
     "@discordjs/rest": "^1.5.0",
