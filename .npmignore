@@ -3,3 +3,5 @@ jsconfig.json
 .prettierrc.json
 nodemon.json
 *.config.js
+cli.js
+**/src/**
