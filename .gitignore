@@ -1,4 +1,5 @@
 commands
+*.config.js
 
 bin
 
