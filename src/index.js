@@ -2,7 +2,8 @@ import glob from 'fast-glob';
 import path from 'node:path';
 import normalize from 'normalize-path';
 import { config } from 'dotenv';
-import { REST, Routes, SlashCommandBuilder } from 'discord.js';
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discordjs-api-types/v10';
 import utils from './utils.js';
 
 const { _log, __dirname } = utils;
