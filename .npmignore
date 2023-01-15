@@ -1,4 +1,4 @@
-**/node_modules/**
 jsconfig.json
 .prettierignore
 .prettierrc.json
+nodemon.json
