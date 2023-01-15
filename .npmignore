@@ -5,4 +5,3 @@ nodemon.json
 *.config.js
 cli.js
 **/src/**
-package.json
