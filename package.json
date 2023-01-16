@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "0.3.2",
+  "version": "0.3.0",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
@@ -12,6 +12,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
+    "prod": "node bin\\cli.js deploy --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "rollup --config",
     "prepack": "npm run build",
     "prepublish": "npm run build",
@@ -22,7 +23,8 @@
     "discord",
     "cli",
     "bot",
-    "deploy"
+    "deploy",
+    "commands"
   ],
   "author": "felipee-monteiro",
   "license": "ISC",
@@ -38,6 +40,7 @@
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
+    "lodash.foreach": "^4.5.0",
     "meow": "^11.0.0",
     "normalize-path": "^3.0.0",
     "ora": "^6.1.2",
