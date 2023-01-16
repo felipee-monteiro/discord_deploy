@@ -1,7 +1,12 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import loading from 'ora';
 import colors from 'ansi-styles';
 
+var spinner = loading({
+  text: 'Deploying your files...',
+  indent: 1
+});
 var _logLevels = [
   {
     level: 'info',
@@ -38,6 +43,9 @@ export default {
         message,
         colors[_logProps.color]['close']
       );
+    } else if (level === 'error') {
+      spinner.fail('An error was ocurred. use --debug the see the details.');
+      process.exit(1);
     }
   },
   __dirname: path.dirname(__filename)
