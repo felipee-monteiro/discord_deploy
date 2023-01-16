@@ -7,6 +7,7 @@ import { Routes } from 'discord-api-types/v10';
 import utils from './utils.js';
 
 const { _log, __dirname } = utils;
+const { applicationGuildCommands } = Routes;
 var commandsData = new Map();
 commandsData.set('commandsAsJson', []);
 var commandsDataAsJSON = commandsData.get('commandsAsJson');
@@ -48,7 +49,7 @@ async function deploy ({ cwd, debug, test }) {
     await getCommandFiles(cwd);
     var api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
     const resolved = await api.put(
-      Routes.applicationGuildCommands(
+      applicationGuildCommands(
         process.env['CLIENT_ID'],
         test ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']
       ),
@@ -57,7 +58,7 @@ async function deploy ({ cwd, debug, test }) {
       }
     );
     resolved.length
-      ? resolved.forEach(({name}) => _log('Deployed: ' + name, 'log'))
+      ? resolved.forEach(({ name }) => _log('Deployed: ' + name, 'log'))
       : _log('Failed to push some refs.', 'error');
     process.exit(0);
   } catch (e) {
