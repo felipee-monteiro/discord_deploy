@@ -4,10 +4,12 @@ import normalize from 'normalize-path';
 import { config } from 'dotenv';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
+import loading from 'ora';
 import utils from './utils.js';
 
 const { _log, __dirname } = utils;
 const { applicationGuildCommands } = Routes;
+var spinner = loading('Deploying your commands...');
 var commandsData = new Map();
 commandsData.set('commandsAsJson', []);
 var commandsDataAsJSON = commandsData.get('commandsAsJson');
@@ -64,15 +66,14 @@ async function deploy ({ cwd, debug, test }) {
     spinner.stop();
     if (isCommandsDeployed.length) {
       isCommandsDeployed.forEach(({ name }) =>
-        _log('Deployed: ' + name, 'log')
+        spinner.succeed('Deployed: ' + name)
       );
       process.exit(0);
     } else {
       _log('Failed to push some refs. Aborting...', 'error');
     }
   } catch (e) {
-    e.code && _log(e.code, 'error');
+    spinner.stop();
   }
 }
-
 export default deploy;
