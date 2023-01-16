@@ -1,4 +1,5 @@
 import glob from 'fast-glob';
+import forEach from 'lodash.foreach';
 import { resolve, relative } from 'node:path';
 import normalize from 'normalize-path';
 import { config } from 'dotenv';
@@ -9,10 +10,10 @@ import utils from './utils.js';
 
 const { _log, __dirname } = utils;
 const { applicationGuildCommands } = Routes;
-var spinner = loading('Deploying your commands...');
-var commandsData = new Map();
+const spinner = loading('Deploying your commands...');
+const commandsData = new Map();
 commandsData.set('commandsAsJson', []);
-var commandsDataAsJSON = commandsData.get('commandsAsJson');
+const commandsDataAsJSON = commandsData.get('commandsAsJson');
 
 function validateCommandObject (file) {
   Object.keys(file).forEach(fileProp => {
@@ -23,19 +24,21 @@ function validateCommandObject (file) {
 }
 
 async function getCommandFiles (cwd) {
-  var files = glob.sync('**/commands/**/*.{js,cjs,mjs}', {
+  var files = await glob('**/commands/**/*.{js,cjs,mjs}', {
+    ignore: ['**/node_modules/**', '**/.git/**'],
     cwd,
-    absolute: true,
-    ignore: ['**/node_modules/**', '**/.git/**']
+    absolute: true
   });
   if (files.length) {
-    for (let file of files) {
+    console.time('for-in');
+    forEach(files, async file => {
       _log('Processing: ' + file);
       const { default: fileRequired } = await import(
         normalize(relative(__dirname, file))
       );
       validateCommandObject(fileRequired);
-    }
+    });
+    console.timeEnd('for-in');
   } else {
     _log(
       '"commands" dir not found. You can change the cwd overriding --cwd option.\n cwd: ' +
