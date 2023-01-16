@@ -15,7 +15,7 @@ var commandsDataAsJSON = commandsData.get('commandsAsJson');
 function validateCommandObject (file) {
   Object.keys(file).forEach(fileProp => {
     if (fileProp === 'data') {
-      commandsDataAsJSON.push(file[fileProp].toJSON());
+      commandsDataAsJSON.push(file[fileProp]?.toJSON());
     }
   });
 }
@@ -35,8 +35,11 @@ async function getCommandFiles (cwd) {
       validateCommandObject(fileRequired);
     }
   } else {
-    _log('"commands" dir not found. Base Path: ' + cwd, 'error');
-    process.exit(1);
+    _log(
+      '"commands" dir not found. You can change the cwd overriding --cwd option.\n cwd: ' +
+        cwd,
+      'error'
+    );
   }
 }
 
@@ -48,7 +51,8 @@ async function deploy ({ cwd, debug, test }) {
   try {
     await getCommandFiles(cwd);
     var api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
-    const resolved = await api.put(
+    spinner.start();
+    var isCommandsDeployed = await api.put(
       applicationGuildCommands(
         process.env['CLIENT_ID'],
         test ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']
@@ -57,13 +61,18 @@ async function deploy ({ cwd, debug, test }) {
         body: commandsDataAsJSON
       }
     );
-    resolved.length
-      ? resolved.forEach(({ name }) => _log('Deployed: ' + name, 'log'))
-      : _log('Failed to push some refs.', 'error');
-    process.exit(0);
+    spinner.stop();
+    if (isCommandsDeployed.length) {
+      isCommandsDeployed.forEach(({ name }) =>
+        _log('Deployed: ' + name, 'log')
+      );
+      process.exit(0);
+    } else {
+      _log('Failed to push some refs. Aborting...', 'error');
+    }
   } catch (e) {
-    _log(e, 'error');
-    process.exit(1);
+    e.code && _log(e.code, 'error');
   }
 }
+
 export default deploy;
