@@ -11,7 +11,10 @@ notifier({
     version
   },
   updateCheckInterval: 0
-}).notify();
+}).notify({
+  message:
+    'New Version is now Available !\n {currentVersion} -> {latestVersion}\n Run `{updateCommand}` to update.'
+});
 
 program
   .name(name)
@@ -31,7 +34,8 @@ program
         false
       )
       .description(
-        'Deploy your commands files by searching for "commands" directory in your project. (ATTENTION: Needs "TOKEN" variable in .env)'
+        'Deploy your commands files by searching for "commands" directory in your project. (ATTENTION: Needs "TOKEN", "CLIENT_ID" and "GUILD_ID" variables in .env)'
       )
       .action(deploy)
-  ).parse(process.argv);
+  )
+  .parse(process.argv);
