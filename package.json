@@ -27,7 +27,6 @@
   "author": "felipee-monteiro",
   "license": "ISC",
   "devDependencies": {
-    "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-terser": "^0.3.0",
     "nodemon": "^2.0.20",
     "prettier": "2.8.2",
@@ -36,11 +35,12 @@
   "dependencies": {
     "@discordjs/rest": "^1.5.0",
     "ansi-styles": "^6.2.1",
-    "commander": "^9.5.0",
     "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
+    "meow": "^11.0.0",
     "normalize-path": "^3.0.0",
+    "ora": "^6.1.2",
     "update-notifier": "^6.0.2"
   }
 }

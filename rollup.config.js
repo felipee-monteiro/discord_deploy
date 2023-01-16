@@ -1,5 +1,4 @@
 import os from 'node:os';
-import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 import shebang from 'rollup-plugin-add-shebang';
 
@@ -10,7 +9,8 @@ export default {
     inlineDynamicImports: true
   },
   external: [
-    'commander',
+    'meow',
+    'ora',
     'discord-api-types/v10',
     '@discordjs/rest',
     'fast-glob',
@@ -22,7 +22,6 @@ export default {
     'update-notifier'
   ],
   plugins: [
-    json({ compact: true }),
     terser({ maxWorkers: os.cpus().length, toplevel: true }),
     shebang()
   ]
