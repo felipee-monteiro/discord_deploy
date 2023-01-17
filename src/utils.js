@@ -3,10 +3,12 @@ import { fileURLToPath } from 'node:url';
 import loading from 'ora';
 import colors from 'ansi-styles';
 
-var spinner = loading({
-  text: 'Deploying your files...',
-  indent: 1
-});
+function spinner () {
+  return loading({
+    text: 'Deploying your files...',
+    indent: 1
+  });
+}
 var _logLevels = [
   {
     level: 'info',
@@ -30,6 +32,7 @@ var _logLevels = [
   }
 ];
 
+var loadingSpinner = spinner();
 var debugMode = process.argv.some(arg => arg === '--debug');
 
 const __filename = fileURLToPath(import.meta.url);
@@ -44,9 +47,10 @@ export default {
         colors[_logProps.color]['close']
       );
     } else if (level === 'error') {
-      spinner.fail('An error was ocurred. use --debug the see the details.');
+      loadingSpinner.fail('An error was ocurred. use --debug the see the details.');
       process.exit(1);
     }
   },
-  __dirname: path.dirname(__filename)
+  __dirname: path.dirname(__filename),
+  spinner
 };
