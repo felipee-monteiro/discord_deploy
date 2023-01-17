@@ -9,20 +9,17 @@ export default {
     inlineDynamicImports: true
   },
   external: [
+    'update-notifier',
+    'lodash.foreach',
     'meow',
     'ora',
-    'discord-api-types/v10',
-    '@discordjs/rest',
+    'node-fetch',
     'fast-glob',
     'ansi-styles',
     'node:url',
     'dotenv',
     'normalize-path',
-    'node:path',
-    'update-notifier'
+    'node:path'
   ],
-  plugins: [
-    terser({ maxWorkers: os.cpus().length, toplevel: true }),
-    shebang()
-  ]
+  plugins: [terser({ maxWorkers: os.cpus().length, toplevel: true }), shebang()]
 };
