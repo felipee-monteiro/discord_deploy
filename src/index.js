@@ -37,7 +37,7 @@ async function deploy (isTestEnabled) {
     try {
       loadingSpinner.start();
       var res = await fetch(
-        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${process.env['GUILD_TEST_ID']}/commands`,
+        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${ isTestEnabled ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']}/commands`,
         {
           method: 'PUT',
           headers: {
