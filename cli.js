@@ -2,14 +2,16 @@ import meow from 'meow';
 import notifier from 'update-notifier';
 import main from './src/index.js';
 
-var cmd = meow(`
+var cmd = meow(
+  `
   Usage: discord_deploy deploy [options]\n
   Options:
     -d, --debug  run in debug mode. (default: false)
     --cwd <dir>  Absolute directory to searches for. (default: ${process.cwd()})
     --test       Enables test mode (Requires GUILD_TEST_ID env key). (default: false)
     -h, --help   display CLI Help.
- `,{
+ `,
+  {
     importMeta: import.meta,
     flags: {
       debug: {
@@ -29,12 +31,10 @@ var cmd = meow(`
   }
 );
 
-var { name, version } = cmd.pkg;
-
 notifier({
   pkg: {
-    name,
-    version
+    name: cmd.pkg.name,
+    version: cmd.pkg.version
   },
   updateCheckInterval: 0,
   shouldNotifyInNpmScript: true
@@ -44,4 +44,4 @@ notifier({
   defer: false
 });
 
-if (cmd.input.some(stdin => stdin === 'deploy')) await main(cmd.flags);
+if (cmd.input.some(stdin => stdin === 'deploy')) main(cmd.flags);
