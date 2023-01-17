@@ -32,12 +32,8 @@ var cmd = meow(
 );
 
 notifier({
-  pkg: {
-    name: cmd.pkg.name,
-    version: cmd.pkg.version
-  },
+  pkg: cmd.pkg,
   updateCheckInterval: 0,
-  shouldNotifyInNpmScript: true
 }).notify({
   message:
     'Version {latestVersion} is now Available!\n Run `{updateCommand}@latest` to update.',
