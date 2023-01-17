@@ -1,22 +1,21 @@
 {
   "name": "discord_deploy",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
   "files": [
     "./bin"
   ],
-  "description": "A CLI to deploy slash commands easily.",
+  "description": "A CLI to deploy slash commands easily by searching for 'commands' directory in your project. (ATTENTION: Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env).",
   "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "prod": "node bin\\cli.js deploy --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
+    "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "rollup --config",
     "prepack": "npm run build",
-    "prepublish": "npm run build",
-    "publish:npm": "npm publish --access public"
+    "prepublish": "npm run build"
   },
   "keywords": [
     "slash commands",
@@ -27,7 +26,7 @@
     "commands"
   ],
   "author": "felipee-monteiro",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.3.0",
     "nodemon": "^2.0.20",
@@ -35,13 +34,12 @@
     "rollup-plugin-add-shebang": "^0.3.1"
   },
   "dependencies": {
-    "@discordjs/rest": "^1.5.0",
     "ansi-styles": "^6.2.1",
-    "discord-api-types": "^0.37.27",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
     "lodash.foreach": "^4.5.0",
     "meow": "^11.0.0",
+    "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
     "ora": "^6.1.2",
     "update-notifier": "^6.0.2"
