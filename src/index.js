@@ -33,37 +33,40 @@ async function getCommandFiles (options) {
 }
 
 async function deploy (isTestEnabled) {
-  try {
-    loadingSpinner.start();
-    var res = await fetch(
-      `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${process.env['GUILD_TEST_ID']}/commands`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bot ${process.env['TOKEN']}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(commandsDataAsJSON)
+  if (commandsDataAsJSON.length) {
+    try {
+      var res = await fetch(
+        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${process.env['GUILD_TEST_ID']}/commands`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bot ${process.env['TOKEN']}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(commandsDataAsJSON)
+        }
+      ).then(async response => ({
+        body: await response.json(),
+        code: response.status,
+        statusText: response.statusText
+      }));
+      if (res.code === 200) {
+        forEach(res.body, ({ name }) =>
+          loadingSpinner.succeed('Deployed: /' + name)
+        );
+        loadingSpinner.stop();
+        process.exit(0);
+      } else if ('retry_after' in res.body) {
+        loadingSpinner.warn(
+          'RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)'
+        );
       }
-    ).then(async response => ({
-      body: await response.json(),
-      code: response.status,
-      statusText: response.statusText
-    }));
-    if (res.code === 200 && res.body.length) {
-      forEach(res.body, ({ name }) =>
-        loadingSpinner.succeed('Deployed: ' + name)
-      );
+    } catch (e) {
       loadingSpinner.stop();
-      process.exit(0);
-    } else if ('retry_after' in res.body) {
-      loadingSpinner.warn(
-        'RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)'
-      );
+      _log('FATAL: ' + e, 'error');
     }
-  } catch (e) {
-    loadingSpinner.stop();
-    _log('FATAL: ' + e, 'error');
+  } else {
+    _log('commands dir not found.', 'error');
   }
 }
 
