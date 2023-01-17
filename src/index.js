@@ -35,6 +35,7 @@ async function getCommandFiles (options) {
 async function deploy (isTestEnabled) {
   if (commandsDataAsJSON.length) {
     try {
+      loadingSpinner.start();
       var res = await fetch(
         `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${process.env['GUILD_TEST_ID']}/commands`,
         {
@@ -50,6 +51,7 @@ async function deploy (isTestEnabled) {
         code: response.status,
         statusText: response.statusText
       }));
+      loadingSpinner.stop();
       if (res.code === 200) {
         forEach(res.body, ({ name }) =>
           loadingSpinner.succeed('Deployed: /' + name)
