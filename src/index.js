@@ -29,7 +29,7 @@ async function getCommandFiles (options) {
     absolute: true
   });
   files.on('data', importCommandFiles);
-  files.on('error', error => console.debug(error));
+  files.on('error', error => _log(error, 'error'));
   files.on('end', () => deploy(options.test));
 }
 
