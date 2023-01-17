@@ -3,12 +3,11 @@ import forEach from 'lodash.foreach';
 import { resolve, relative } from 'node:path';
 import normalize from 'normalize-path';
 import { config } from 'dotenv';
-import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v10';
+import fetch from 'node-fetch';
 import utils from './utils.js';
 
 const { _log, __dirname, spinner } = utils;
-const { applicationGuildCommands } = Routes;
+const loadingSpinner = spinner();
 const commandsDataAsJSON = [];
 
 async function importCommandFiles (filePath) {
@@ -35,33 +34,40 @@ async function getCommandFiles (options) {
 
 async function deploy (isTestEnabled) {
   try {
-    var api = new REST({ version: '10' }).setToken(process.env['TOKEN']);
-    spinner.start();
-    var isCommandsDeployed = await api.put(
-      applicationGuildCommands(
-        process.env['CLIENT_ID'],
-        isTestEnabled ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']
-      ),
+    loadingSpinner.start();
+    var res = await fetch(
+      `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${process.env['GUILD_TEST_ID']}/commands`,
       {
-        body: commandsDataAsJSON
+        method: 'PUT',
+        headers: {
+          Authorization: `Bot ${process.env['TOKEN']}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commandsDataAsJSON)
       }
-    );
-    spinner.stop();
-    if (isCommandsDeployed.length) {
-      forEach(isCommandsDeployed, ({ name }) =>
-        spinner.succeed('Deployed: ' + name)
+    ).then(async response => ({
+      body: await response.json(),
+      code: response.status,
+      statusText: response.statusText
+    }));
+    if (res.code === 200 && res.body.length) {
+      forEach(res.body, ({ name }) =>
+        loadingSpinner.succeed('Deployed: ' + name)
       );
+      loadingSpinner.stop();
       process.exit(0);
-    } else {
-      _log('Failed to push some refs. Aborting...', 'error');
+    } else if ('retry_after' in res.body) {
+      loadingSpinner.warn(
+        'RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)'
+      );
     }
   } catch (e) {
-    spinner.stop();
+    loadingSpinner.stop();
     _log('FATAL: ' + e, 'error');
   }
 }
 
-async function main (options) {
+function main (options) {
   config({
     path: resolve(options.cwd, '.env'),
     debug: options.debug
