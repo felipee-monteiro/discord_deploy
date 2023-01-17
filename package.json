@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "0.3.3",
+  "version": "0.3.5",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
@@ -14,8 +14,7 @@
     "dev": "nodemon",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "rollup --config",
-    "prepack": "npm run build",
-    "prepublish": "npm run build"
+    "prepack": "npm run build"
   },
   "keywords": [
     "slash commands",
@@ -31,7 +30,8 @@
     "@rollup/plugin-terser": "^0.3.0",
     "nodemon": "^2.0.20",
     "prettier": "2.8.2",
-    "rollup-plugin-add-shebang": "^0.3.1"
+    "rollup-plugin-add-shebang": "^0.3.1",
+    "update-notifier": "^6.0.2"
   },
   "dependencies": {
     "ansi-styles": "^6.2.1",
@@ -41,7 +41,6 @@
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
-    "ora": "^6.1.2",
-    "update-notifier": "^6.0.2"
+    "ora": "^6.1.2"
   }
 }
