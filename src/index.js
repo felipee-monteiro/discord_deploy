@@ -6,7 +6,7 @@ import { config } from 'dotenv';
 import fetch from 'node-fetch';
 import utils from './utils.js';
 
-const { _log, __dirname, __filename, spinner } = utils;
+const { _log, __dirname, spinner } = utils;
 const loadingSpinner = spinner();
 const commandsDataAsJSON = [];
 
@@ -16,8 +16,10 @@ async function importCommandFiles (filePath) {
   var fileRequired = await import(
     normalize(relative(__dirname, filePathAsString))
   ).then(module => module.default);
-  if ('data' in fileRequired) {
+  if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
     commandsDataAsJSON.push(fileRequired.data.toJSON());
+  } else {
+    _log(`toJSON method not found on command file ${filePathAsString}`, 'error');
   }
 }
 
@@ -65,7 +67,9 @@ async function deploy (isTestEnabled) {
       } else if ('retry_after' in res.body) {
         const { retry_after } = res.body;
         loadingSpinner.warn(
-          `RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\nTry again in ${Math.floor(retry_after)} seconds.`
+          `RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\nTry again in ${Math.floor(
+            retry_after
+          )} seconds.`
         );
       } else {
         _log(`REQUEST_FAILED[${res.code}]`, 'error');
