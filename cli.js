@@ -40,5 +40,6 @@ notifier({
 if (cmd.input.length && cmd.input.some(stdin => stdin === 'deploy')) {
   main(cmd.flags);
 } else {
-  utils.spinner().fail('Use --help to show menu.');
+  utils.spinner().info('Use --help to show menu.');
+  process.exit(0);
 }
