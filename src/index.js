@@ -19,7 +19,7 @@ async function importCommandFiles (filePath) {
   if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
     commandsDataAsJSON.push(fileRequired.data.toJSON());
   } else {
-    _log(`toJSON method not found on command file ${filePathAsString}`, 'error');
+    _log(`toJSON method not found on 'data' property at command file ${filePathAsString}`, 'error');
   }
 }
 
