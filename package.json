@@ -4,6 +4,9 @@
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
+  "bugs": {
+    "email": "crawlerthe0@gmail.com"
+  },
   "files": [
     "./bin"
   ],
