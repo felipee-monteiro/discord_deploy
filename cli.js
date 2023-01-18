@@ -1,5 +1,4 @@
 import meow from 'meow';
-import notifier from 'simple-update-notifier';
 import utils from './src/utils.js';
 import main from './src/index.js';
 
@@ -31,11 +30,6 @@ var cmd = meow(
     }
   }
 );
-
-notifier({
-  pkg: cmd.pkg,
-  updateCheckInterval: 0
-});
 
 if (cmd.input.length && cmd.input.some(stdin => stdin === 'deploy')) {
   main(cmd.flags);
