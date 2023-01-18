@@ -5,7 +5,6 @@ export default {
   input: './cli.js',
   output: {
     dir: 'bin',
-    minifyInternalExports: true,
     inlineDynamicImports: true
   },
   treeshake: {
@@ -13,7 +12,7 @@ export default {
   },
   external: [
     'fast-glob',
-    'node:path'
+    'node:path',
     'node:url',
     'node-fetch',
     'dotenv',
@@ -22,7 +21,7 @@ export default {
     'normalize-path',
     'lodash.foreach',
     'ora',
-    'update-notifier',
+    'update-notifier'
   ],
   plugins: [terser({ maxWorkers: os.cpus().length }), shebang()]
 };
