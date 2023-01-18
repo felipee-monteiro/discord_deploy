@@ -21,7 +21,7 @@ export default {
     'normalize-path',
     'lodash.foreach',
     'ora',
-    'update-notifier'
+    'simple-update-notifier'
   ],
   plugins: [terser({ maxWorkers: os.cpus().length }), shebang()]
 };
