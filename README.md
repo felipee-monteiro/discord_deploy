@@ -5,14 +5,15 @@
 - "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is opcional);
 - "commands" directory must exists anywhere in your project.
 - Each command must have 'data' property exported, witch contains the instance of command builder.
-  example (on Discord.js):
+  
+Example (on Discord.js):
 
 ```js
 // CommonJS
 module.exports = { data: new SlashCommmandBuilder() };
 ```
 
-````js
+```js
  // ESM
  export default {
    data: new SlashCommmandBuilder()
