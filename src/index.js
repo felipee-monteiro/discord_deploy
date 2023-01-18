@@ -6,16 +6,16 @@ import { config } from 'dotenv';
 import fetch from 'node-fetch';
 import utils from './utils.js';
 
-const { _log, __dirname, spinner } = utils;
+const { _log, __dirname, __filename, spinner } = utils;
 const loadingSpinner = spinner();
 const commandsDataAsJSON = [];
 
 async function importCommandFiles (filePath) {
   var filePathAsString = filePath.toString();
   _log('Processing: ' + filePathAsString);
-  const { default: fileRequired } = await import(
+  var fileRequired = await import(
     normalize(relative(__dirname, filePathAsString))
-  );
+  ).then(module => module.default);
   if ('data' in fileRequired) {
     commandsDataAsJSON.push(fileRequired.data.toJSON());
   }
@@ -37,7 +37,11 @@ async function deploy (isTestEnabled) {
     try {
       loadingSpinner.start();
       var res = await fetch(
-        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${ isTestEnabled ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']}/commands`,
+        `https://discord.com/api/v10/applications/${
+          process.env['CLIENT_ID']
+        }/guilds/${
+          isTestEnabled ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']
+        }/commands`,
         {
           method: 'PUT',
           headers: {
@@ -62,6 +66,8 @@ async function deploy (isTestEnabled) {
         loadingSpinner.warn(
           'RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)'
         );
+      } else {
+        _log(`REQUEST_FAILED[${res.code}]`, 'error');
       }
     } catch (e) {
       loadingSpinner.stop();
