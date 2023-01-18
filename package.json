@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
