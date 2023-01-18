@@ -1,13 +1,13 @@
 {
   "name": "discord_deploy",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
   "files": [
     "./bin"
   ],
-  "description": "A CLI to deploy slash commands easily by searching for 'commands' directory in your project. (ATTENTION: Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env).",
+  "description": "A CLI to deploy slash commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.",
   "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
