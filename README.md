@@ -2,7 +2,7 @@
 
 ### Before Start
 
-- "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is opcional);
+- "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is required in test mode);
 - "commands" directory must exists anywhere in your project.
 - Each command must have 'data' property exported, witch contains the instance of command builder.
   
@@ -49,7 +49,7 @@ Uses streams and dynamic imports to support large files on demand.
 
   Options:
   -d, --debug  run in debug mode. (default: false)
-  --cwd <dir>  Absolute directory to search for. (default: C:\Users\Felipe\Desktop\projects\www\nodejs\discord_deploy)
+  --cwd <dir>  Absolute directory to search for. (default: process.cwd())
   --test       Enables test mode (Requires GUILD_TEST_ID env key). (default: false)
   -h, --help   display CLI Help.
 ```
