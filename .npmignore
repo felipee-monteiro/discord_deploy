@@ -1,7 +1,0 @@
-jsconfig.json
-.prettierignore
-.prettierrc.json
-nodemon.json
-*.config.js
-cli.js
-**/src/**
