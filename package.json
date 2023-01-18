@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "0.3.9",
+  "version": "1.0.0",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
@@ -22,7 +22,8 @@
     "cli",
     "bot",
     "deploy",
-    "commands"
+    "commands",
+    "discord.js"
   ],
   "author": "felipee-monteiro",
   "license": "MIT",
@@ -30,8 +31,7 @@
     "@rollup/plugin-terser": "^0.3.0",
     "nodemon": "^2.0.20",
     "prettier": "2.8.2",
-    "rollup-plugin-add-shebang": "^0.3.1",
-    "update-notifier": "^6.0.2"
+    "rollup-plugin-add-shebang": "^0.3.1"
   },
   "dependencies": {
     "ansi-styles": "^6.2.1",
@@ -41,6 +41,7 @@
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
-    "ora": "^6.1.2"
+    "ora": "^6.1.2",
+    "simple-update-notifier": "^1.1.0"
   }
 }
