@@ -63,8 +63,9 @@ async function deploy (isTestEnabled) {
         loadingSpinner.stop();
         process.exit(0);
       } else if ('retry_after' in res.body) {
+        const { retry_after } = res.body;
         loadingSpinner.warn(
-          'RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)'
+          `RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\nTry again in ${Math.floor(retry_after)} seconds.`
         );
       } else {
         _log(`REQUEST_FAILED[${res.code}]`, 'error');
