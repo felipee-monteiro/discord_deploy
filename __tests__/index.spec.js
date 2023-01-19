@@ -29,7 +29,7 @@ test('should show help menu;', async function (t) {
   t.is(
     stdout,
     '\n' +
-      "  A CLI to deploy slash commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.\n" +
+      "  A CLI to deploy slash guild commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.\n" +
       '\n' +
       '  Usage: discord_deploy deploy [options]\n' +
       '\n' +
@@ -47,4 +47,10 @@ test('should not show help menu', async function (t) {
   const { stdout, stderr } = await execCLI(['-help']);
   if (stdout) t.fail();
   t.is(stderr, 'ℹ Use --help to show menu.\n');
+});
+
+test('should throws "commands dir not found"', async function (t) {
+  await execCLI(['deploy']).catch(e => {
+    t.is(1, e.code);
+  });
 });
