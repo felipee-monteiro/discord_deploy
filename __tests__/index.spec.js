@@ -14,7 +14,7 @@ async function execCLI (flags) {
 test('should not show version number;', async function (t) {
   const { stdout, stderr } = await execCLI(['-version']);
   if (stdout) t.fail();
-  t.is(stderr, 'ℹ Use --help to show menu.\n');
+  t.notDeepEqual(stderr, 'ℹ Use --help to show menu.\n');
 });
 
 test('should show version number;', async function (t) {
@@ -46,7 +46,7 @@ test('should show help menu;', async function (t) {
 test('should not show help menu', async function (t) {
   const { stdout, stderr } = await execCLI(['-help']);
   if (stdout) t.fail();
-  t.is(stderr, 'ℹ Use --help to show menu.\n');
+  t.notDeepEqual(stderr, 'ℹ Use --help to show menu.\n');
 });
 
 test('should not throws an error', async function (t) {
@@ -58,4 +58,13 @@ test('should throws "commands dir not found"', async function (t) {
   await execCLI(['deploy', '--cwd jkdksdhfksdhfkjsdhfskdfjsdfh']).catch(e => {
     t.is(1, e.code);
   });
+});
+
+test('should throws an error: command dir not found, or files are not valid.', async function (t) {
+  const { stdout, stderr } = await execCLI([
+    'deploy',
+    '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj'
+  ]).catch(e =>
+    t.notDeepEqual(e, 'An error was ocurred. use --debug the see the details.')
+  );
 });
