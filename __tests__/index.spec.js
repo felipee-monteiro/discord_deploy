@@ -12,7 +12,8 @@ async function execCLI (flags) {
 }
 
 test('should not show version number;', async function (t) {
-  const { stdout, stderr } = await execCLI();
+  const { stdout, stderr } = await execCLI(['-version']);
+  if (stdout) t.fail();
   t.is(stderr, 'ℹ Use --help to show menu.\n');
 });
 
@@ -24,7 +25,7 @@ test('should show version number;', async function (t) {
 
 test('should show help menu;', async function (t) {
   const { stdout, stderr } = await execCLI(['--help']);
-  if (stderr) t.fail();
+  if (stderr) t.fail('Help menu: stderr eecuted.');
   t.is(
     stdout,
     '\n' +
@@ -40,4 +41,10 @@ test('should show help menu;', async function (t) {
       ' \n' +
       '\n'
   );
+});
+
+test('should not show help menu', async function (t) {
+  const { stdout, stderr } = await execCLI(['-help']);
+  if (stdout) t.fail();
+  t.is(stderr, 'ℹ Use --help to show menu.\n');
 });
