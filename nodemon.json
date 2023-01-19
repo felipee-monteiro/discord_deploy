@@ -1,10 +1,11 @@
 {
     "verbose": true,
-    "exec": "npm run test && node cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
+    "exec": "npm run test && node cli.js deploy --debug --test",
     "ignore": [
         "**/.git/**",
         "**/node_modules/**",
         "**/commands/**",
-        "*.json"
+        "package.json",
+        "package-lock.json"
     ]
 }
