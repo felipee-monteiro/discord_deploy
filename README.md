@@ -4,7 +4,8 @@
 
 - "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is required in test mode);
 - "commands" directory must exists anywhere in your project.
-- Each command must export an object with have 'data' property, witch contains the instance of command builder.
+- If you are using Discord.js, each command must export an object with have 'data' property, witch contains the instance of command builder.
+in case of eris.js, you can pass an object containing some properties. see the examples bellow:
 
 Example (Discord.js):
 
@@ -29,7 +30,7 @@ Eris.js:
 ```js
 // commands/example01.js
 module.exports = {
-  name: 'command-name' // required field,
+  name: 'command-name', // required field,
   description: 'command-description' // required field,
   ...
 };
@@ -52,7 +53,7 @@ With one command, you are done to deploy slash commands easily.
 
 #### Tiny:
 
-Just 3kB (main file).
+Just 2.9KB (main file).
 
 #### Supports CommonJS and ESM for commands files.
 
