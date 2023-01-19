@@ -51,7 +51,6 @@ export default {
       process.exit(1);
     }
   },
-  __filename,
   __dirname: path.dirname(__filename),
   spinner
 };
