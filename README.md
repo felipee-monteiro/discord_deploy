@@ -4,20 +4,22 @@
 
 - "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is required in test mode);
 - "commands" directory must exists anywhere in your project.
-- Each command must have 'data' property exported, witch contains the instance of command builder.
+- Each command must export an object with have 'data' property, witch contains the instance of command builder.
   
-Example (on Discord.js):
+Example (Discord.js):
 
 ```js
 // CommonJS
-module.exports = { data: new SlashCommmandBuilder() };
+module.exports = { 
+  data: new SlashCommmandBuilder() 
+};
 ```
 
 ```js
  // ESM
  export default {
    data: new SlashCommmandBuilder()
- }
+ };
 ```
 
 ### Why
@@ -28,7 +30,7 @@ With one command, you are done to deploy slash commands easily.
 
 #### Tiny:
 
-Just 2.8kB (main file).
+Just 3kB (main file).
 
 #### Supports CommonJS and ESM for commands files.
 
@@ -40,7 +42,7 @@ Uses streams and dynamic imports to support large files on demand.
 
 ```bash
  npm install discord_deploy@latest
-````
+```
 
 ### Usage
 
@@ -48,8 +50,8 @@ Uses streams and dynamic imports to support large files on demand.
   discord_deploy deploy [options]
 
   Options:
-  -d, --debug  run in debug mode. (default: false)
-  --cwd <dir>  Absolute directory to search for. (default: process.cwd())
-  --test       Enables test mode (Requires GUILD_TEST_ID env key). (default: false)
-  -h, --help   display CLI Help.
+    -d, --debug  run in debug mode. (default: false)
+    --cwd <dir>  Absolute directory to search for. (default: process.cwd())
+    --test       Enables test mode (Requires GUILD_TEST_ID env key). (default: false)
+    -h, --help   display CLI Help.
 ```
