@@ -45,7 +45,6 @@
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
-    "ora": "^6.1.2",
-    "simple-update-notifier": "^1.1.0"
+    "ora": "^6.1.2"
   }
 }
