@@ -5,22 +5,42 @@
 - "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is required in test mode);
 - "commands" directory must exists anywhere in your project.
 - Each command must export an object with have 'data' property, witch contains the instance of command builder.
-  
+
 Example (Discord.js):
 
 ```js
 // commands/example01.js
-module.exports = { 
+module.exports = {
   data: new SlashCommmandBuilder(),
-  ... 
+  ...
 };
 ```
 
 ```js
  // commands/example01.mjs
  export default {
-   data: new SlashCommmandBuilder()
+   data: new SlashCommmandBuilder(),
    ...
+ };
+```
+
+Eris.js:
+
+```js
+// commands/example01.js
+module.exports = {
+  name: 'command-name' // required field,
+  description: 'command-description' // required field,
+  ...
+};
+```
+
+```js
+ // commands/example01.mjs
+ export default {
+    name: 'command-name',
+    description: 'command-description',
+    ...
  };
 ```
 
