@@ -10,7 +10,7 @@
   "files": [
     "./bin"
   ],
-  "description": "A CLI to deploy slash commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.",
+  "description": "A CLI to deploy slash guild commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.",
   "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
