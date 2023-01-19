@@ -8,37 +8,27 @@ import utils from './utils.js';
 
 const { _log, __dirname, spinner } = utils;
 const loadingSpinner = spinner();
-const commandsDataAsJSON = [];
+const commandsData = [];
 
 async function importCommandFiles (filePath) {
-  var filePathAsString = filePath.toString();
-  _log('Processing: ' + filePathAsString);
-  var fileRequired = await import(
-    normalize(relative(__dirname, filePathAsString))
+  _log('Processing: ' + filePath);
+
+  const fileRequired = await import(
+    normalize(relative(__dirname, filePath))
   ).then(module => module.default);
-  if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
-    commandsDataAsJSON.push(fileRequired.data.toJSON());
-  } else {
-    _log(`toJSON method not found on 'data' property at command file ${filePathAsString}`, 'error');
+
+  if (fileRequired.hasOwnProperty('name')) {
+    commandsData.push(fileRequired);
+  } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
+    commandsData.push(fileRequired.data.toJSON());
   }
 }
 
-async function getCommandFiles (options) {
-  var files = glob.stream('**/commands/**/*.{js,cjs,mjs}', {
-    ignore: ['**/node_modules/**', '**/.git/**'],
-    cwd: options.cwd,
-    absolute: true
-  });
-  files.on('data', importCommandFiles);
-  files.on('error', error => _log(error, 'error'));
-  files.on('end', () => deploy(options.test));
-}
-
 async function deploy (isTestEnabled) {
-  if (commandsDataAsJSON.length) {
+  if (commandsData.length) {
     try {
       loadingSpinner.start();
-      var res = await fetch(
+      const res = await fetch(
         `https://discord.com/api/v10/applications/${
           process.env['CLIENT_ID']
         }/guilds/${
@@ -50,7 +40,7 @@ async function deploy (isTestEnabled) {
             Authorization: `Bot ${process.env['TOKEN']}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(commandsDataAsJSON)
+          body: JSON.stringify(commandsData)
         }
       ).then(async response => ({
         body: await response.json(),
@@ -65,10 +55,9 @@ async function deploy (isTestEnabled) {
         loadingSpinner.stop();
         process.exit(0);
       } else if ('retry_after' in res.body) {
-        const { retry_after } = res.body;
         loadingSpinner.warn(
           `RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\nTry again in ${Math.floor(
-            retry_after
+            res.body.retry_after
           )} seconds.`
         );
       } else {
@@ -81,6 +70,21 @@ async function deploy (isTestEnabled) {
   } else {
     _log('commands dir not found.', 'error');
   }
+}
+
+async function getCommandFiles (options) {
+  const files = glob.stream('**/commands/**/*.{js,cjs,mjs}', {
+    ignore: ['**/node_modules/**', '**/.git/**'],
+    cwd: options.cwd,
+    absolute: true
+  });
+  files.on('data', async filePath => {
+    files.pause();
+    await importCommandFiles(filePath.toString());
+    files.resume();
+  });
+  files.on('error', error => _log(error, 'error'));
+  files.on('end', async () => await deploy(options.test));
 }
 
 function main (options) {
