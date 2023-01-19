@@ -18,7 +18,7 @@
     "test": "ava __tests__/index.spec.js",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "rollup --config",
-    "prepack": "npm run build"
+    "prepack": "npm run test && npm run build"
   },
   "keywords": [
     "slash commands",
