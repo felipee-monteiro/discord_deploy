@@ -21,6 +21,8 @@ async function importCommandFiles (filePath) {
     commandsData.push(fileRequired);
   } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
     commandsData.push(fileRequired.data.toJSON());
+  } else {
+    _log('File not valid.', 'error');
   }
 }
 
@@ -68,7 +70,7 @@ async function deploy (isTestEnabled) {
       _log('FATAL: ' + e, 'error');
     }
   } else {
-    _log('commands dir not found.', 'error');
+    _log('commands dir not found, or files are not valid.', 'error');
   }
 }
 
