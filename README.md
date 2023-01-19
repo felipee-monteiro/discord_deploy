@@ -9,16 +9,18 @@
 Example (Discord.js):
 
 ```js
-// CommonJS
+// commands/example01.js
 module.exports = { 
-  data: new SlashCommmandBuilder() 
+  data: new SlashCommmandBuilder(),
+  ... 
 };
 ```
 
 ```js
- // ESM
+ // commands/example01.mjs
  export default {
    data: new SlashCommmandBuilder()
+   ...
  };
 ```
 
