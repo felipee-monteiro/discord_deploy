@@ -49,8 +49,13 @@ test('should not show help menu', async function (t) {
   t.is(stderr, 'ℹ Use --help to show menu.\n');
 });
 
+test('should not throws an error', async function (t) {
+  const { stdout, stderr } = await execCLI(['deploy']);
+  t.notDeepEqual(stdout, 'Deployed');
+});
+
 test('should throws "commands dir not found"', async function (t) {
-  await execCLI(['deploy']).catch(e => {
+  await execCLI(['deploy', '--cwd jkdksdhfksdhfkjsdhfskdfjsdfh']).catch(e => {
     t.is(1, e.code);
   });
 });
