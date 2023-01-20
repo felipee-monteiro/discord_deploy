@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
@@ -45,6 +45,7 @@
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
-    "ora": "^6.1.2"
+    "ora": "^6.1.2",
+    "update-notifier": "^6.0.2"
   }
 }
