@@ -34,11 +34,10 @@ test('should show help menu;', async function (t) {
       '  Usage: discord_deploy deploy [options]\n' +
       '\n' +
       '  Options:\n' +
-      '    -d, --debug  run in debug mode. (default: false)\n' +
-      '    --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy)\n' +
-      '    --test       Enables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
-      '    -h, --help   display CLI Help.\n' +
-      ' \n' +
+      '  -d, --debug  run in debug mode. (default: false)\n' +
+      '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy\n' +
+      '  --testEnables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
+      '  -h, --help   display CLI Help.\n' +
       '\n'
   );
 });
