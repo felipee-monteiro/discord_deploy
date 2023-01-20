@@ -20,7 +20,8 @@ export default {
     'ansi-styles',
     'normalize-path',
     'lodash.foreach',
-    'ora'
+    'ora',
+    'update-check'
   ],
   plugins: [terser({ maxWorkers: os.cpus().length }), shebang()]
 };
