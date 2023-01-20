@@ -46,7 +46,7 @@ module.exports = {
  };
 ```
 
-### Why
+### Why ?
 
 #### Simple:
 
