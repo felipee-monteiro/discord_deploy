@@ -12,11 +12,9 @@ const commandsData = [];
 
 async function importCommandFiles (filePath) {
   _log('Processing: ' + filePath);
-
   const fileRequired = await import(
     normalize(relative(__dirname, filePath))
   ).then(module => module.default);
-
   if (fileRequired.hasOwnProperty('name')) {
     commandsData.push(fileRequired);
   } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
@@ -27,15 +25,15 @@ async function importCommandFiles (filePath) {
 }
 
 async function deploy (isTestEnabled) {
-  if (commandsData.length) {
+  const guild_id =
+    isTestEnabled && 'GUILD_TEST_ID' in process.env
+      ? process.env['GUILD_TEST_ID']
+      : process.env['GUILD_ID'];
+  if (guild_id && commandsData.length) {
     try {
       loadingSpinner.start();
       const res = await fetch(
-        `https://discord.com/api/v10/applications/${
-          process.env['CLIENT_ID']
-        }/guilds/${
-          isTestEnabled ? process.env['GUILD_TEST_ID'] : process.env['GUILD_ID']
-        }/commands`,
+        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${guild_id}/commands`,
         {
           method: 'PUT',
           headers: {
@@ -56,7 +54,7 @@ async function deploy (isTestEnabled) {
         );
         loadingSpinner.stop();
         process.exit(0);
-      } else if ('retry_after' in res.body) {
+      } else if ('retry_after' in res.body && res.body['retry_after'] !== 0) {
         loadingSpinner.warn(
           `RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\nTry again in ${Math.floor(
             res.body.retry_after
@@ -70,7 +68,10 @@ async function deploy (isTestEnabled) {
       _log('FATAL: ' + e, 'error');
     }
   } else {
-    _log('commands dir not found, or files are not valid.', 'error');
+    _log(
+      'PLease verify your .env file, and if "commands" directory exists anywhere in your project with valid commands files',
+      'error'
+    );
   }
 }
 
