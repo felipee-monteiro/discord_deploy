@@ -46,6 +46,6 @@
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
     "ora": "^6.1.2",
-    "update-notifier": "^6.0.2"
+    "update-check": "^1.5.4"
   }
 }
