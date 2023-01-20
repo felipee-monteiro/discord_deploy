@@ -1,4 +1,6 @@
 import meow from 'meow';
+import colors from 'ansi-styles';
+import notifier from 'update-check';
 import utils from './src/utils.js';
 import main from './src/index.js';
 
@@ -30,6 +32,21 @@ var cmd = meow(
     }
   }
 );
+
+try {
+  await notifier(cmd.pkg, { interval: 2000 }).then(success => {
+    if (success) {
+      console.debug(`
+                      
+                 ${success.latest} is now avaliable !
+    Run 'npm install discord_deploy@latest' to update.
+
+      `);
+    }
+  });
+} catch (err) {
+  console.error(`Failed to check for updates: ${err}`);
+}
 
 if (cmd.input.length && cmd.input.some(stdin => stdin === 'deploy')) {
   main(cmd.flags);
