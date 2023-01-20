@@ -9,7 +9,8 @@ function spinner () {
     indent: 1
   });
 }
-var _logLevels = [
+
+const LOG_LEVELS = [
   {
     level: 'info',
     color: 'cyanBright',
@@ -38,7 +39,7 @@ var debugMode = process.argv.some(arg => arg === '--debug');
 const __filename = fileURLToPath(import.meta.url);
 export default {
   _log: function (message, level = 'info') {
-    var _logProps = _logLevels.find(log => log.level === level);
+    var _logProps = LOG_LEVELS.find(log => log.level === level);
     if (debugMode && _logProps) {
       console[_logProps.level](
         colors[_logProps.color]['open'],
