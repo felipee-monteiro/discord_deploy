@@ -33,13 +33,13 @@ const LOG_LEVELS = [
   }
 ];
 
-var loadingSpinner = spinner();
-var debugMode = process.argv.some(arg => arg === '--debug');
+const loadingSpinner = spinner();
+const debugMode = process.argv.some(arg => arg === '--debug');
 
 const __filename = fileURLToPath(import.meta.url);
 export default {
   _log: function (message, level = 'info') {
-    var _logProps = LOG_LEVELS.find(log => log.level === level);
+    const _logProps = LOG_LEVELS.find(log => log.level === level);
     if (debugMode && _logProps) {
       console[_logProps.level](
         colors[_logProps.color]['open'],
