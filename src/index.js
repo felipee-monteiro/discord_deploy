@@ -15,12 +15,12 @@ async function importCommandFiles (filePath) {
   const fileRequired = await import(
     normalize(relative(__dirname, filePath))
   ).then(module => module.default);
-  if ('name' in fileRequired) {
+  if ('name' in fileRequired && 'description' in fileRequired) {
     commandsData.push(fileRequired);
   } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
     commandsData.push(fileRequired.data.toJSON());
   } else {
-    _log('File not valid.', 'error');
+    _log(`File not valid: ${filePath}`, 'warn');
   }
 }
 
