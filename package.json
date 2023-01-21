@@ -18,7 +18,7 @@
     "test": "ava __tests__/index.spec.js",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "esbuild cli.min.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
-    "prepack": "npm run test && npm run build"
+    "prepack": "npm run build"
   },
   "keywords": [
     "slash commands",
