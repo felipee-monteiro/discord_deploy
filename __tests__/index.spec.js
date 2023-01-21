@@ -4,6 +4,7 @@ import { exec } from 'node:child_process';
 import * as cli from '../package.json' assert { type: 'json' };
 
 const execAsync = promisify(exec);
+const { version } = cli.default;
 
 async function execCLI (flags) {
   return Array.isArray(flags) && flags.length
@@ -66,4 +67,15 @@ test('should throws an error: command dir not found, or files are not valid.', a
   ]).catch(e =>
     t.notDeepEqual(e, 'An error was ocurred. use --debug the see the details.')
   );
+});
+
+test('should show updater', async function (t) {
+  const newVersion = parseInt(version[version.length - 1] - 2);
+  const cmd = await execAsync(
+    `npm link discord_deploy@1.0.${newVersion}`
+  );
+  if (cmd.stderr) t.fail();
+  const { stdout, stderr } = await execCLI();
+  console.debug(stdout, stderr);
+  t.pass();
 });
