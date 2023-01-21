@@ -5,7 +5,12 @@ export default {
   input: './cli.js',
   output: {
     dir: 'bin',
-    inlineDynamicImports: true
+    plugins: [terser({ maxWorkers: os.cpus().length }), shebang()],
+    compact: true,
+    generatedCode: {
+      objectShorthand: true
+    },
+    minifyInternalExports: true,
   },
   treeshake: {
     preset: 'smallest'
@@ -22,6 +27,5 @@ export default {
     'lodash.foreach',
     'ora',
     'update-check'
-  ],
-  plugins: [terser({ maxWorkers: os.cpus().length }), shebang()]
+  ]
 };
