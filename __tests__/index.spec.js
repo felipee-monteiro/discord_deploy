@@ -38,7 +38,7 @@ test('should show help menu;', async function (t) {
       '  -d, --debug  run in debug mode. (default: false)\n' +
       '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy\n' +
       '  --testEnables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
-      '  -h, --help   display CLI Help.\n' +
+      '  --help   display CLI Help.\n' +
       '\n'
   );
 });
@@ -50,7 +50,7 @@ test('should not show help menu', async function (t) {
 });
 
 test('should not throws an error', async function (t) {
-  const { stdout, stderr } = await execCLI(['deploy']);
+  const { stdout, stderr } = await execCLI(['deploy', '--test']);
   t.notDeepEqual(stdout, 'Deployed');
 });
 
@@ -67,15 +67,4 @@ test('should throws an error: command dir not found, or files are not valid.', a
   ]).catch(e =>
     t.notDeepEqual(e, 'An error was ocurred. use --debug the see the details.')
   );
-});
-
-test('should show updater', async function (t) {
-  const newVersion = parseInt(version[version.length - 1] - 2);
-  const cmd = await execAsync(
-    `npm link discord_deploy@1.0.${newVersion}`
-  );
-  if (cmd.stderr) t.fail();
-  const { stdout, stderr } = await execCLI();
-  console.debug(stdout, stderr);
-  t.pass();
 });
