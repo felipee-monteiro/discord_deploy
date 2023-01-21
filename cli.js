@@ -25,12 +25,14 @@ const cmd = meow(
   }
 );
 
-await notifier(cmd.pkg, { interval: 2000 }).then(success => {
-  success ??
-    console.debug(
-      `\n\n\t\t${success.latest} is now avaliable !\n\tRun 'npm install discord_deploy@latest' to update.\n\n`
-    );
-});
+try {
+  await notifier(cmd.pkg, { interval: 2000 }).then(success => {
+    success ??
+      console.debug(
+        `\n\n\t\t${success.latest} is now avaliable !\n\tRun 'npm install discord_deploy@latest' to update.\n\n`
+      );
+  });
+} catch (e) {}
 
 if (cmd.input.length && cmd.input.some(stdin => stdin === 'deploy')) {
   main(cmd.flags);
