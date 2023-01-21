@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "1.0.10",
+  "version": "1.0.9",
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
@@ -18,7 +18,7 @@
     "test": "ava __tests__/index.spec.js",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
-    "prepack": "npm run build"
+    "prepack": "npm test && npm run build"
   },
   "keywords": [
     "slash commands",
@@ -35,7 +35,9 @@
   "devDependencies": {
     "ava": "^5.1.1",
     "nodemon": "^2.0.20",
-    "prettier": "2.8.2"
+    "prettier": "2.8.2",
+    "rollup-plugin-add-shebang": "^0.3.1",
+    "yargs": "^17.6.2"
   },
   "dependencies": {
     "ansi-styles": "^6.2.1",
@@ -46,8 +48,6 @@
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
     "ora": "^6.1.2",
-    "rollup-plugin-add-shebang": "^0.3.1",
-    "update-check": "^1.5.4",
-    "yargs": "^17.6.2"
+    "update-check": "^1.5.4"
   }
 }
