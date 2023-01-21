@@ -15,7 +15,7 @@ async function importCommandFiles (filePath) {
   const fileRequired = await import(
     normalize(relative(__dirname, filePath))
   ).then(module => module.default);
-  if (fileRequired.hasOwnProperty('name')) {
+  if ('name' in fileRequired) {
     commandsData.push(fileRequired);
   } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
     commandsData.push(fileRequired.data.toJSON());
@@ -47,7 +47,6 @@ async function deploy (isTestEnabled) {
         code: response.status,
         statusText: response.statusText
       }));
-      loadingSpinner.stop();
       if (res.code === 200) {
         forEach(res.body, ({ name }) =>
           loadingSpinner.succeed('Deployed: /' + name)
