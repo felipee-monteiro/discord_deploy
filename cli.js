@@ -1,5 +1,4 @@
 import meow from 'meow';
-import colors from 'ansi-styles';
 import notifier from 'update-check';
 import utils from './src/utils.js';
 import main from './src/index.js';
@@ -27,11 +26,10 @@ const cmd = meow(
 );
 
 await notifier(cmd.pkg, { interval: 2000 }).then(success => {
-  if (success) {
+  success ??
     console.debug(
       `\n\n\t\t${success.latest} is now avaliable !\n\tRun 'npm install discord_deploy@latest' to update.\n\n`
     );
-  }
 });
 
 if (cmd.input.length && cmd.input.some(stdin => stdin === 'deploy')) {

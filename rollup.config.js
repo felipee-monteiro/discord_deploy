@@ -1,11 +1,9 @@
-import os from 'node:os';
-import terser from '@rollup/plugin-terser';
 import shebang from 'rollup-plugin-add-shebang';
 export default {
-  input: './cli.js',
+  input: './bin/cli.js',
   output: {
     dir: 'bin',
-    plugins: [terser({ maxWorkers: os.cpus().length }), shebang()],
+    plugins: [shebang()],
     compact: true,
     generatedCode: {
       objectShorthand: true
