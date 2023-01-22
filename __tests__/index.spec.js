@@ -13,9 +13,21 @@ async function execCLI (flags) {
 }
 
 test('should not show version number;', async function (t) {
-  const { stdout, stderr } = await execCLI(['-version']);
-  if (stdout) t.fail();
-  t.notDeepEqual(stderr, 'Use --help to show menu.\n');
+  const cmd = await execCLI(['-version']);
+  if (cmd.stdout) {
+    t.assert(
+      cmd.stdout,
+      '\n' +
+        '   ┌────────────────────────────────────────────────────────┐\n' +
+        '   │                                                        │\n' +
+        '   │   1.0.11 is now avaliable !                            │\n' +
+        "   │   Run 'npm install discord_deploy@latest' to update.   │\n" +
+        '   │                                                        │\n' +
+        '   └────────────────────────────────────────────────────────┘\n' +
+        '\n'
+    );
+  }
+  t.assert(cmd.stderr, 'Use --help to show menu.\n');
 });
 
 test('should show version number;', async function (t) {
@@ -30,7 +42,7 @@ test('should show help menu;', async function (t) {
   t.is(
     stdout,
     '\n' +
-      "  A CLI to deploy slash guild commands easily.\n" +
+      '  A CLI to deploy slash guild commands easily.\n' +
       '\n' +
       '  Usage: discord_deploy deploy [options]\n' +
       '\n' +
@@ -44,9 +56,21 @@ test('should show help menu;', async function (t) {
 });
 
 test('should not show help menu', async function (t) {
-  const { stdout, stderr } = await execCLI(['-help']);
-  if (stdout) t.fail();
-  t.notDeepEqual(stderr, 'Use --help to show menu.\n');
+  const cmd = await execCLI(['-help']);
+  if (cmd.stdout) {
+    t.assert(
+      cmd.stdout,
+      '\n' +
+        '   ┌────────────────────────────────────────────────────────┐\n' +
+        '   │                                                        │\n' +
+        '   │   1.0.11 is now avaliable !                            │\n' +
+        "   │   Run 'npm install discord_deploy@latest' to update.   │\n" +
+        '   │                                                        │\n' +
+        '   └────────────────────────────────────────────────────────┘\n' +
+        '\n'
+    );
+  }
+  t.notDeepEqual(cmd.stderr, 'Use --help to show menu.\n');
 });
 
 test('should not throws an error', async function (t) {
