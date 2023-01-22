@@ -18,6 +18,7 @@ export default {
     'node:path',
     'node:url',
     'node-fetch',
+    'boxen',
     'dotenv',
     'meow',
     'ansi-styles',
