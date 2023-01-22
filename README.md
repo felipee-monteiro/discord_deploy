@@ -58,7 +58,7 @@ Just 3.2KB (main file).
 
 #### Supports CommonJS and ESM for commands files.
 
-#### Hight Peformant and Scalable:
+#### Faster:
 
 Uses streams and dynamic imports to support large files on demand.
 
