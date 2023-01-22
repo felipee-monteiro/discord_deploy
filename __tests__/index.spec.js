@@ -30,7 +30,7 @@ test('should show help menu;', async function (t) {
   t.is(
     stdout,
     '\n' +
-      "  A CLI to deploy slash guild commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.\n" +
+      "  A CLI to deploy slash guild commands easily.\n" +
       '\n' +
       '  Usage: discord_deploy deploy [options]\n' +
       '\n' +
