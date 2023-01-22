@@ -49,7 +49,7 @@ test('should show help menu;', async function (t) {
       '  Options:\n' +
       '  -d, --debug  run in debug mode. (default: false)\n' +
       '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy\n' +
-      '  --testEnables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
+      '  --test Enables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
       '  --help   display CLI Help.\n' +
       '\n'
   );
