@@ -10,15 +10,15 @@
   "files": [
     "./bin"
   ],
-  "description": "A CLI to deploy slash guild commands easily by searching for 'commands' directory in your project. Needs 'TOKEN', 'CLIENT_ID' and 'GUILD_ID' variables in .env.",
+  "description": "A CLI to deploy slash guild commands easily.",
   "main": "./bin/cli.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
     "test": "ava __tests__/index.spec.js",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
-    "prepack": "npm test && npm run build"
+    "build": "npm run test && esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
+    "prepack": "npm run build"
   },
   "keywords": [
     "slash commands",
@@ -34,6 +34,7 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "^5.1.1",
+    "boxen": "^7.0.1",
     "nodemon": "^2.0.20",
     "prettier": "2.8.2",
     "rollup-plugin-add-shebang": "^0.3.1",
@@ -41,6 +42,7 @@
   },
   "dependencies": {
     "ansi-styles": "^6.2.1",
+    "discord_deploy": "^1.0.0",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
     "lodash.foreach": "^4.5.0",
