@@ -1,6 +1,7 @@
+import { resolve, relative } from 'node:path';
+import process from 'node:process';
 import glob from 'fast-glob';
 import forEach from 'lodash.foreach';
-import { resolve, relative } from 'node:path';
 import normalize from 'normalize-path';
 import { config } from 'dotenv';
 import fetch from 'node-fetch';
@@ -10,7 +11,7 @@ const { _log, __dirname, spinner } = utils;
 const loadingSpinner = spinner();
 const commandsData = [];
 
-async function importCommandFiles (filePath) {
+export async function importCommandFiles (filePath) {
   _log('Processing: ' + filePath);
   const fileRequired = await import(
     normalize(relative(__dirname, filePath))
@@ -24,7 +25,7 @@ async function importCommandFiles (filePath) {
   }
 }
 
-async function deploy (isTestEnabled) {
+export async function deploy (isTestEnabled) {
   const guild_id =
     isTestEnabled && 'GUILD_TEST_ID' in process.env
       ? process.env['GUILD_TEST_ID']
@@ -74,7 +75,7 @@ async function deploy (isTestEnabled) {
   }
 }
 
-async function getCommandFiles (options) {
+export async function getCommandFiles (options) {
   const files = glob.stream('**/commands/**/*.{js,cjs,mjs}', {
     ignore: ['**/node_modules/**', '**/.git/**'],
     cwd: options.cwd,
@@ -89,11 +90,10 @@ async function getCommandFiles (options) {
   files.on('end', async () => await deploy(options.test));
 }
 
-function main (options) {
+export function main (options) {
   config({
     path: resolve(options.cwd, '.env'),
     debug: options.debug
   });
   getCommandFiles(options);
 }
-export default main;
