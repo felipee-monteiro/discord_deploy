@@ -37,10 +37,10 @@ test('should show version number;', async function (t) {
 });
 
 test('should show help menu;', async function (t) {
-  const { stdout, stderr } = await execCLI(['--help']);
-  if (stderr) t.fail('Help menu: stderr eecuted.');
+  const cmd = await execCLI(['--help']);
+  if (cmd.stderr) t.fail('Help menu: stderr eecuted.');
   t.is(
-    stdout,
+    cmd.stdout,
     '\n' +
       '  A CLI to deploy slash guild commands easily.\n' +
       '\n' +
@@ -48,7 +48,7 @@ test('should show help menu;', async function (t) {
       '\n' +
       '  Options:\n' +
       '  -d, --debug  run in debug mode. (default: false)\n' +
-      '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy\n' +
+      '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy)\n' +
       '  --test Enables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
       '  --help   display CLI Help.\n' +
       '\n'
@@ -78,13 +78,30 @@ test('should not throws an error', async function (t) {
 });
 
 test('should throws an error: command dir not found, or files are not valid.', async function (t) {
-  await t.throwsAsync(
-    execCLI(['deploy', '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj']),
-    {
-      instanceOf: Error,
-      code: 1,
-      message:
-        'Command failed: node cli deploy --cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj\n✖ An error was ocurred. use --debug the see the details.\n'
-    }
+  const cmd = await execCLI([
+    'deploy',
+    '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj'
+  ]);
+  if (cmd.stdout) t.fail();
+  t.is(
+    cmd.stderr,
+    '✖ An error was ocurred. use --debug the see the details.\n'
+  );
+});
+
+test('should run in debug mode', async t => {
+  const cmd = await execCLI([
+    'deploy',
+    '--debug',
+    '--cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot',
+    '--test'
+  ]);
+  t.is(
+    cmd.stdout,
+    '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/index.js \x1B[39m\n' +
+      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/login.js \x1B[39m\n' +
+      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/selectCronDay.js \x1B[39m\n' +
+      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/selectRepoCommand.js \x1B[39m\n' +
+      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/user.js \x1B[39m\n'
   );
 });
