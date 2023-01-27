@@ -15,9 +15,10 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "test": "ava __tests__/index.spec.js",
+    "test": "ava __tests__/e2e.spec.js && jest __tests__/unit.spec.js",
+    "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npm run test && esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
+    "build": "npm run lint && npm run test && esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -35,14 +36,14 @@
   "devDependencies": {
     "ava": "^5.1.1",
     "boxen": "^7.0.1",
-    "nodemon": "^2.0.20",
+    "eslint": "^8.32.0",
+    "jest": "^29.4.1",
     "prettier": "2.8.2",
     "rollup-plugin-add-shebang": "^0.3.1",
     "yargs": "^17.6.2"
   },
   "dependencies": {
     "ansi-styles": "^6.2.1",
-    "discord_deploy": "^1.0.0",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
     "lodash.foreach": "^4.5.0",
