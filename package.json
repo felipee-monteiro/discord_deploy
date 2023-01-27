@@ -15,7 +15,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "test": "ava __tests__/e2e.spec.js && jest __tests__/unit.spec.js",
+    "test:e2e": "ava __tests__/e2e.test.js",
+    "test:unit": " set NODE_OPTIONS=--experimental-vm-modules && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "npm run lint && npm run test && esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
@@ -34,6 +35,7 @@
   "author": "felipee-monteiro",
   "license": "MIT",
   "devDependencies": {
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "ava": "^5.1.1",
     "boxen": "^7.0.1",
     "eslint": "^8.32.0",
