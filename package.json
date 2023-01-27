@@ -15,8 +15,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "test:e2e": "ava __tests__/e2e.test.js",
-    "test:unit": " set NODE_OPTIONS=--experimental-vm-modules && npx jest unit.test.js",
+    "test:e2e": "c8 ava __tests__/e2e.test.js",
+    "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
     "build": "npm run lint && npm run test && esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
