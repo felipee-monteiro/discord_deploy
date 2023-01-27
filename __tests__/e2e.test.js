@@ -21,7 +21,7 @@ test('should not show version number;', async function (t) {
         '   ┌────────────────────────────────────────────────────────┐\n' +
         '   │                                                        │\n' +
         '   │   1.0.11 is now avaliable !                            │\n' +
-        "   │   Run 'npm install discord_deploy@latest' to update.   │\n" +
+        '   │   Run "npm install discord_deploy@latest" to update.   │\n' +
         '   │                                                        │\n' +
         '   └────────────────────────────────────────────────────────┘\n' +
         '\n'
@@ -64,7 +64,7 @@ test('should not show help menu', async function (t) {
         '   ┌────────────────────────────────────────────────────────┐\n' +
         '   │                                                        │\n' +
         '   │   1.0.11 is now avaliable !                            │\n' +
-        "   │   Run 'npm install discord_deploy@latest' to update.   │\n" +
+        '   │   Run "npm install discord_deploy@latest" to update.   │\n' +
         '   │                                                        │\n' +
         '   └────────────────────────────────────────────────────────┘\n' +
         '\n'
