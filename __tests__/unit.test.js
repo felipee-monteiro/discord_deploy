@@ -5,6 +5,12 @@ import {
   getCommandFiles,
   main
 } from '../src/index.js';
+import utils from '../src/utils.js';
+
+const MOCK = {
+  test: true,
+  cwd: 'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot'
+};
 
 test('should not accept empty filePath', async () => {
   await importCommandFiles().catch(e =>
@@ -51,22 +57,18 @@ test('should not deploy', async () => {
 });
 
 afterAll(async () => {
-  expect(
-    await getCommandFiles({
-      test: true,
-      cwd: 'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot'
-    })
-  ).toBe(undefined);
+  const result = await getCommandFiles(MOCK);
+  expect(result).toBe(undefined);
 });
 
 test('should run', async () => {
-  const mock = {
-    test: true,
-    cwd: 'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot'
-  };
-  expect(main(mock)).resolves.toBe(undefined);
+  expect(main(MOCK)).resolves.toBe(undefined);
 });
 
 test('should not run', async () => {
   expect(main()).rejects.toThrow(TypeError);
+});
+
+test('should run in debug mode', async () => {
+  expect(deploy(true))
 });

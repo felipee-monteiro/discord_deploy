@@ -105,3 +105,30 @@ test('should run in debug mode', async t => {
       '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/user.js \x1B[39m\n'
   );
 });
+
+test('should not accept cwd', async t => {
+  const cmd = await execCLI([
+    'deploy',
+    '--cwd djfkhsjkfskfksdkfdlfh',
+    '--debug'
+  ]);
+  t.is(
+    cmd.stderr,
+    '\x1B[91m [ERROR] PLease verify your .env file, and if "commands" directory exists anywhere in your project with valid commands files \x1B[39m\n'
+  );
+});
+
+test('should render RETRY_AFTER', async t => {
+  for (let i = 0; i < 3; i++) {
+    const cmd = await execCLI([
+      'deploy',
+      '--cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot',
+      '--test'
+    ]);
+    t.notDeepEqual(
+      cmd.stderr,
+      '- Deploying your files...\n' +
+        '⚠ RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\n'
+    );
+  }
+});
