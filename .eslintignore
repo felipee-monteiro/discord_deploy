@@ -1,3 +1,5 @@
+node_modules
 bin
 commmands
+coverage
 __tests__
