@@ -16,6 +16,7 @@ export default {
   external: [
     'fast-glob',
     'node:path',
+    'node:process',
     'node:url',
     'node-fetch',
     'boxen',
