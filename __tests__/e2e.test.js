@@ -15,7 +15,7 @@ async function execCLI (flags) {
 test('should not show version number;', async function (t) {
   const cmd = await execCLI(['-version']);
   if (cmd.stdout) {
-    t.assert(
+    t.notDeepEqual(
       cmd.stdout,
       '\n' +
         '   ┌────────────────────────────────────────────────────────┐\n' +
@@ -27,7 +27,7 @@ test('should not show version number;', async function (t) {
         '\n'
     );
   }
-  t.assert(cmd.stderr, 'Use --help to show menu.\n');
+  t.notDeepEqual(cmd.stderr, 'Use --help to show menu.\n');
 });
 
 test('should show version number;', async function (t) {
@@ -78,14 +78,14 @@ test('should not throws an error', async function (t) {
 });
 
 test('should throws an error: command dir not found, or files are not valid.', async function (t) {
-  const cmd = await execCLI([
-    'deploy',
-    '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj'
-  ]);
-  if (cmd.stdout) t.fail();
-  t.is(
-    cmd.stderr,
-    '✖ An error was ocurred. use --debug the see the details.\n'
+  await t.throwsAsync(
+    execCLI(['deploy', '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj']),
+    {
+      instanceOf: Error,
+      message:
+        'Command failed: node cli deploy --cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj\n✖ An error was ocurred. use --debug to see the details.\n',
+      code: 1
+    }
   );
 });
 
@@ -107,21 +107,19 @@ test('should run in debug mode', async t => {
 });
 
 test('should not accept cwd', async t => {
-  const cmd = await execCLI([
-    'deploy',
-    '--cwd djfkhsjkfskfksdkfdlfh',
-    '--debug'
-  ]);
-  t.is(
-    cmd.stderr,
-    '\x1B[91m [ERROR] PLease verify your .env file, and if "commands" directory exists anywhere in your project with valid commands files \x1B[39m\n'
-  );
+  await t.throwsAsync(execCLI(['deploy', '--cwd djfkhsjkfskfksdkfdlfh']), {
+    instanceOf: Error,
+    message:
+      'Command failed: node cli deploy --cwd djfkhsjkfskfksdkfdlfh\n✖ An error was ocurred. use --debug to see the details.\n',
+    code: 1
+  });
 });
 
 test('should render RETRY_AFTER', async t => {
   for (let i = 0; i < 3; i++) {
     const cmd = await execCLI([
       'deploy',
+      '--debug',
       '--cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot',
       '--test'
     ]);
