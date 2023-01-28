@@ -37,7 +37,6 @@
   "devDependencies": {
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "ava": "^5.1.1",
-    "boxen": "^7.0.1",
     "eslint": "^8.32.0",
     "jest": "^29.4.1",
     "prettier": "2.8.2",
@@ -47,6 +46,7 @@
   "dependencies": {
     "@jest/globals": "^29.4.1",
     "ansi-styles": "^6.2.1",
+    "boxen": "^7.0.1",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
     "lodash.foreach": "^4.5.0",
