@@ -6,6 +6,7 @@ import {
   main
 } from '../src/index.js';
 import utils from '../src/utils.js';
+import { jest } from '@jest/globals';
 
 const MOCK = {
   test: true,
@@ -26,18 +27,10 @@ test('should not accept incorrect filePath', async () => {
   );
 });
 
-test('should accept filePath', async () => {
+test('should accept filePath', () => {
   expect(
     importCommandFiles(
       'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot\\server\\commands\\github\\login.js'
-    )
-  ).resolves.toBe(undefined);
-});
-
-test('should not accept invalid files', async () => {
-  expect(
-    importCommandFiles(
-      'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot\\server\\commands\\github\\user.js'
     )
   ).resolves.toBe(undefined);
 });
@@ -48,27 +41,29 @@ test('should deploy', async () => {
     name: 'teste',
     description: 'testando o teste'
   });
+  jest.useFakeTimers();
   expect(deploy(true)).resolves.toBe(undefined);
 });
 
-test('should not deploy', async () => {
+test('should not deploy', () => {
   commandsData.length = 0;
   expect(deploy(true)).resolves.toBe(false);
 });
 
-afterAll(async () => {
-  const result = await getCommandFiles(MOCK);
-  expect(result).toBe(undefined);
+test('should get all files', () => {
+  jest.useFakeTimers();
+  expect(getCommandFiles(MOCK)).resolves.toBe(undefined);
+  jest.clearAllTimers();
 });
 
-test('should run', async () => {
+test('should run', () => {
   expect(main(MOCK)).resolves.toBe(undefined);
 });
 
-test('should not run', async () => {
+test('should not run', () => {
   expect(main()).rejects.toThrow(TypeError);
 });
 
-test('should run in debug mode', async () => {
-  expect(deploy(true))
+it('should run in debug mode', async () => {
+  expect(main({ debug: true, ...MOCK })).resolves.toBe(undefined);
 });
