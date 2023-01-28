@@ -8,7 +8,8 @@
     "email": "crawlerthe0@gmail.com"
   },
   "files": [
-    "./bin"
+    "./bin",
+    "LICENSE"
   ],
   "description": "A CLI to deploy slash guild commands easily.",
   "main": "./bin/cli.js",
@@ -19,7 +20,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npm run test:e2e && esbuild cli.js --bundle --outdir=bin --minify --platform=node --packages=external --target=node16 --format=esm --ignore-annotations --tree-shaking=true --analyze && rollup --config",
+    "build": "npm run test:e2e && rollup --config && esbuild bin\\cli.js --minify --outdir=bin --allow-overwrite",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -52,7 +53,6 @@
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
     "normalize-path": "^3.0.0",
-    "ora": "^6.1.2",
-    "update-check": "^1.5.4"
+    "ora": "^6.1.2"
   }
 }
