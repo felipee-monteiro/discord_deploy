@@ -48,7 +48,7 @@ export default {
         colors[_logProps.color]['close']
       );
     } else if (level === 'error') {
-      loadingSpinner.fail('An error was ocurred. use --debug the see the details.');
+      loadingSpinner.fail('An error was ocurred. use --debug to see the details.');
       process.exit(1);
     }
   },
