@@ -19,7 +19,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npm run lint && npm run test && esbuild cli.js --outfile=bin\\cli.js --bundle --minify --platform=node --packages=external  --target=node16 --format=esm --ignore-annotations --tree-shaking --analyze && rollup --config",
+    "build": "npm run test:e2e && esbuild cli.js --bundle --outdir=bin --minify --platform=node --packages=external --target=node16 --format=esm --ignore-annotations --tree-shaking=true --analyze && rollup --config",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -45,6 +45,7 @@
     "yargs": "^17.6.2"
   },
   "dependencies": {
+    "@jest/globals": "^29.4.1",
     "ansi-styles": "^6.2.1",
     "dotenv": "^16.0.3",
     "fast-glob": "^3.2.12",
