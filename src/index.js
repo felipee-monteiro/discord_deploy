@@ -40,7 +40,7 @@ export async function deploy (isTestEnabled) {
     try {
       loadingSpinner.start();
       const res = await fetch(
-        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${guild_id}/commands/`,
+        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${guild_id}/commands`,
         {
           method: 'PUT',
           headers: {
@@ -68,6 +68,8 @@ export async function deploy (isTestEnabled) {
         );
       } else {
         _log(`REQUEST_FAILED[${res.code}]`, 'error');
+        loadingSpinner.stop();
+        process.exit(1);
       }
     } catch (e) {
       loadingSpinner.stop();
