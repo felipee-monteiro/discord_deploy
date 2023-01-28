@@ -9,19 +9,25 @@ import utils from './utils.js';
 
 const { _log, __dirname, spinner } = utils;
 const loadingSpinner = spinner();
-const commandsData = [];
+export const commandsData = [];
 
 export async function importCommandFiles (filePath) {
-  _log('Processing: ' + filePath);
-  const fileRequired = await import(
-    normalize(relative(__dirname, filePath))
-  ).then(module => module.default);
-  if ('name' in fileRequired && 'description' in fileRequired) {
-    commandsData.push(fileRequired);
-  } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
-    commandsData.push(fileRequired.data.toJSON());
+  if (typeof filePath === 'string' && filePath.length) {
+    const fileRequired = await import(
+      normalize(relative(__dirname, filePath))
+    ).then(module => module.default);
+    _log('Processing: ' + filePath);
+    if ('name' in fileRequired && 'description' in fileRequired) {
+      commandsData.push(fileRequired);
+    } else if ('data' in fileRequired && 'toJSON' in fileRequired.data) {
+      commandsData.push(fileRequired.data.toJSON());
+    } else {
+      _log(`File not valid: ${filePath}`, 'warn');
+    }
   } else {
-    _log(`File not valid: ${filePath}`, 'warn');
+    throw new TypeError(
+      `filePath must be a String. Received: ${typeof filePath}`
+    );
   }
 }
 
@@ -34,7 +40,7 @@ export async function deploy (isTestEnabled) {
     try {
       loadingSpinner.start();
       const res = await fetch(
-        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${guild_id}/commands`,
+        `https://discord.com/api/v10/applications/${process.env['CLIENT_ID']}/guilds/${guild_id}/commands/`,
         {
           method: 'PUT',
           headers: {
@@ -72,12 +78,12 @@ export async function deploy (isTestEnabled) {
       'PLease verify your .env file, and if "commands" directory exists anywhere in your project with valid commands files',
       'error'
     );
+    return false;
   }
 }
 
 export async function getCommandFiles (options) {
   const files = glob.stream('**/commands/**/*.{js,cjs,mjs}', {
-    ignore: ['**/node_modules/**', '**/.git/**'],
     cwd: options.cwd,
     absolute: true
   });
@@ -90,10 +96,16 @@ export async function getCommandFiles (options) {
   files.on('end', async () => await deploy(options.test));
 }
 
-export function main (options) {
-  config({
-    path: resolve(options.cwd, '.env'),
-    debug: options.debug
-  });
-  getCommandFiles(options);
+export async function main (options) {
+  if (typeof options === 'object' && Object.keys(options).length) {
+    config({
+      path: resolve(options.cwd, '.env'),
+      debug: options.debug
+    });
+    await getCommandFiles(options);
+  } else {
+    throw new TypeError(
+      'Options must be an object, or have one or more key(s).'
+    );
+  }
 }
