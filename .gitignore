@@ -1,5 +1,6 @@
 commands
 bin
+*.0x
 
 ### Node ###
 # Logs
