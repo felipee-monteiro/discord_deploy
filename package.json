@@ -50,13 +50,13 @@
     "rollup-plugin-esbuild": "^5.0.0"
   },
   "dependencies": {
-    "ansi-styles": "^6.2.1",
-    "dotenv": "^16.0.3",
-    "fast-glob": "^3.2.12",
     "lodash.foreach": "^4.5.0",
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
+    "ansi-styles": "^6.2.1",
+    "dotenv": "^16.0.3",
     "normalize-path": "^3.0.0",
+    "fast-glob": "^3.2.12",
     "ora": "^6.1.2"
   }
 }
