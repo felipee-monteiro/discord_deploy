@@ -13,21 +13,8 @@ async function execCLI (flags) {
 }
 
 test('should not show version number;', async function (t) {
-  const cmd = await execCLI(['-version']);
-  if (cmd.stdout) {
-    t.notDeepEqual(
-      cmd.stdout,
-      '\n' +
-        '   ┌────────────────────────────────────────────────────────┐\n' +
-        '   │                                                        │\n' +
-        '   │   1.0.11 is now avaliable !                            │\n' +
-        '   │   Run "npm install discord_deploy@latest" to update.   │\n' +
-        '   │                                                        │\n' +
-        '   └────────────────────────────────────────────────────────┘\n' +
-        '\n'
-    );
-  }
-  t.notDeepEqual(cmd.stderr, 'Use --help to show menu.\n');
+  const { stderr } = await execCLI(['-version']);
+  t.notDeepEqual(stderr, 'Use --help to show menu.\n');
 });
 
 test('should show version number;', async function (t) {
@@ -47,7 +34,7 @@ test('should show help menu;', async function (t) {
       '  Usage: discord_deploy deploy [options]\n' +
       '\n' +
       '  Options:\n' +
-      '  -d, --debug  run in debug mode. (default: false)\n' +
+      '  --debug  run in debug mode. (default: false)\n' +
       '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy)\n' +
       '  --test Enables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
       '  --help   display CLI Help.\n' +
@@ -56,21 +43,8 @@ test('should show help menu;', async function (t) {
 });
 
 test('should not show help menu', async function (t) {
-  const cmd = await execCLI(['-help']);
-  if (cmd.stdout) {
-    t.assert(
-      cmd.stdout,
-      '\n' +
-        '   ┌────────────────────────────────────────────────────────┐\n' +
-        '   │                                                        │\n' +
-        '   │   1.0.11 is now avaliable !                            │\n' +
-        '   │   Run "npm install discord_deploy@latest" to update.   │\n' +
-        '   │                                                        │\n' +
-        '   └────────────────────────────────────────────────────────┘\n' +
-        '\n'
-    );
-  }
-  t.notDeepEqual(cmd.stderr, 'Use --help to show menu.\n');
+  const { stderr } = await execCLI(['-help']);
+  t.notDeepEqual(stderr, 'Use --help to show menu.\n');
 });
 
 test('should not throws an error', async function (t) {
