@@ -20,7 +20,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npm run test:e2e && rollup --config && esbuild bin\\cli.js --minify --outdir=bin --allow-overwrite",
+    "build": "npm run test:e2e && rollup --config && esbuild bin\\cli.js --minify --platform=node --packages=external --target=node16 --outdir=bin --allow-overwrite",
     "prepack": "npm run build"
   },
   "keywords": [
