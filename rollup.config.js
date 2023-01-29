@@ -1,14 +1,13 @@
 import shebang from 'rollup-plugin-add-shebang';
 export default {
-  input: './bin/cli.js',
+  input: 'cli.js',
+  compress: true,
   output: {
     dir: 'bin',
     plugins: [shebang()],
-    compact: true,
     generatedCode: {
       objectShorthand: true
-    },
-    minifyInternalExports: true,
+    }
   },
   treeshake: {
     preset: 'smallest'
