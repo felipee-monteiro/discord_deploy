@@ -1,5 +1,4 @@
 import meow from 'meow';
-import utils from './src/utils.js';
 import { main } from './src/index.js';
 
 const cmd = meow(
@@ -27,6 +26,5 @@ const cmd = meow(
 if (cmd.input.length && cmd.input.some(stdin => stdin === 'deploy')) {
   main(cmd.flags);
 } else {
-  utils.spinner().info('Use --help to show menu.');
-  process.exit(0);
+  cmd.showHelp();
 }
