@@ -8,9 +8,6 @@
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
-  "bugs": {
-    "email": "crawlerthe0@gmail.com"
-  },
   "files": [
     "./bin",
     "LICENSE",
@@ -25,7 +22,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npm run test:e2e && rollup --config",
+    "build": "npm run test:e2e && npx tsup-node",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -38,6 +35,16 @@
     "discord.js",
     "eris"
   ],
+  "tsup": {
+    "entry": [
+      "cli.js"
+    ],
+    "format": "esm",
+    "minify": true,
+    "splitting": false,
+    "sourcemap": false,
+    "clean": true
+  },
   "author": "felipee-monteiro",
   "license": "MIT",
   "devDependencies": {
@@ -46,17 +53,16 @@
     "eslint": "^8.32.0",
     "jest": "^29.4.1",
     "prettier": "2.8.2",
-    "rollup-plugin-add-shebang": "^0.3.1",
-    "rollup-plugin-esbuild": "^5.0.0"
+    "tsup": "^6.5.0"
   },
   "dependencies": {
+    "ansi-styles": "^6.2.1",
+    "dotenv": "^16.0.3",
+    "fast-glob": "^3.2.12",
     "lodash.foreach": "^4.5.0",
     "meow": "^11.0.0",
     "node-fetch": "^3.3.0",
-    "ansi-styles": "^6.2.1",
-    "dotenv": "^16.0.3",
     "normalize-path": "^3.0.0",
-    "fast-glob": "^3.2.12",
     "ora": "^6.1.2"
   }
 }
