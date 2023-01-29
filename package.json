@@ -1,6 +1,10 @@
 {
   "name": "discord_deploy",
   "version": "1.0.15",
+  "readme": "./README.md",
+  "repository": {
+    "url": "https://github.com/felipee-monteiro/discord_deploy"
+  },
   "bin": {
     "discord_deploy": "./bin/cli.js"
   },
