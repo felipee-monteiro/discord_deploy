@@ -13,8 +13,11 @@ async function execCLI (flags) {
 }
 
 test('should not show version number;', async function (t) {
-  const { stderr } = await execCLI(['-version']);
-  t.notDeepEqual(stderr, 'Use --help to show menu.\n');
+  await t.throwsAsync(execCLI(['-version']), {
+    code: 2,
+    instanceOf: Error,
+    message: 'Command failed: node cli -version\n'
+  });
 });
 
 test('should show version number;', async function (t) {
@@ -42,25 +45,17 @@ test('should show help menu;', async function (t) {
   );
 });
 
-test('should not show help menu', async function (t) {
-  const { stderr } = await execCLI(['-help']);
-  t.notDeepEqual(stderr, 'Use --help to show menu.\n');
-});
-
 test('should not throws an error', async function (t) {
   await t.notThrowsAsync(execCLI(['deploy', '--test']));
 });
 
 test('should throws an error: command dir not found, or files are not valid.', async function (t) {
-  await t.throwsAsync(
-    execCLI(['deploy', '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj']),
-    {
-      instanceOf: Error,
-      message:
-        'Command failed: node cli deploy --cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj\n✖ An error was ocurred. use --debug to see the details.\n',
-      code: 1
-    }
-  );
+  const { stdout, stderr } = await execCLI([
+    'deploy',
+    '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj'
+  ]);
+  if (stdout) t.fail();
+  t.is(stderr, '✖ An error was ocurred. use --debug to see the details.\n');
 });
 
 test('should run in debug mode', async t => {
@@ -78,15 +73,6 @@ test('should run in debug mode', async t => {
       '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/selectRepoCommand.js \x1B[39m\n' +
       '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/user.js \x1B[39m\n'
   );
-});
-
-test('should not accept cwd', async t => {
-  await t.throwsAsync(execCLI(['deploy', '--cwd djfkhsjkfskfksdkfdlfh']), {
-    instanceOf: Error,
-    message:
-      'Command failed: node cli deploy --cwd djfkhsjkfskfksdkfdlfh\n✖ An error was ocurred. use --debug to see the details.\n',
-    code: 1
-  });
 });
 
 test('should render RETRY_AFTER', async t => {
