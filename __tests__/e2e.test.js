@@ -50,12 +50,14 @@ test('should not throws an error', async function (t) {
 });
 
 test('should throws an error: command dir not found, or files are not valid.', async function (t) {
-  const { stdout, stderr } = await execCLI([
-    'deploy',
-    '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj'
-  ]);
-  if (stdout) t.fail();
-  t.is(stderr, '✖ An error was ocurred. use --debug to see the details.\n');
+  await t.throwsAsync(
+    execCLI(['deploy', '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj']),
+    {
+      instanceOf: Error,
+      message:
+        'Command failed: node cli deploy --cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj\n× An error was ocurred. use --debug to see the details.\n'
+    }
+  );
 });
 
 test('should run in debug mode', async t => {
