@@ -8,7 +8,7 @@ import fetch from 'node-fetch';
 import utils from './utils.js';
 
 const { _log, __dirname, spinner } = utils;
-const loadingSpinner = spinner();
+const loadingSpinner = spinner('Deploying your files...');
 export const commandsData = [];
 
 export async function importCommandFiles (filePath) {
@@ -67,9 +67,16 @@ export async function deploy (isTestEnabled) {
           )} seconds.`
         );
       } else {
-        _log(`REQUEST_FAILED[${res.code}]`, 'error');
         loadingSpinner.stop();
-        process.exit(1);
+        if (res.code === 400) {
+          const formErrors = res.body['errors'];
+          forEach(Object.keys(formErrors), key =>
+            forEach(formErrors[key]['_errors'], msg =>
+              _log(msg.message, 'error')
+            )
+          );
+        }
+        _log(`REQUEST_FAILED[${res.code}]`, 'error');
       }
     } catch (e) {
       loadingSpinner.stop();
