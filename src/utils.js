@@ -46,6 +46,7 @@ export default {
       );
     } else if (level === 'error') {
       spinner().fail('An error was ocurred. use --debug to see the details.');
+      process.exit(1);
     }
   },
   __dirname: dirname(__filename),
