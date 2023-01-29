@@ -25,7 +25,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npm run test:e2e && rollup --config && esbuild bin\\cli.js --bundle --minify --platform=node --format=esm --packages=external --target=node16 --outdir=bin --allow-overwrite",
+    "build": "npm run test:e2e && rollup --config",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -46,7 +46,8 @@
     "eslint": "^8.32.0",
     "jest": "^29.4.1",
     "prettier": "2.8.2",
-    "rollup-plugin-add-shebang": "^0.3.1"
+    "rollup-plugin-add-shebang": "^0.3.1",
+    "rollup-plugin-esbuild": "^5.0.0"
   },
   "dependencies": {
     "ansi-styles": "^6.2.1",

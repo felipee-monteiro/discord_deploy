@@ -1,10 +1,10 @@
 import shebang from 'rollup-plugin-add-shebang';
+import esbuild from 'rollup-plugin-esbuild';
 
 export default {
   input: 'cli.js',
   output: {
     dir: 'bin',
-    plugins: [shebang()],
     generatedCode: {
       objectShorthand: true
     }
@@ -27,5 +27,13 @@ export default {
     'lodash.foreach',
     'ora',
     'update-check'
+  ],
+  plugins: [
+    shebang(),
+    esbuild({
+      include: './cli.js',
+      minify: true,
+      target: 'es2020'
+    })
   ]
 };
