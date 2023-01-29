@@ -1,7 +1,7 @@
 import shebang from 'rollup-plugin-add-shebang';
+
 export default {
   input: 'cli.js',
-  compress: true,
   output: {
     dir: 'bin',
     plugins: [shebang()],
@@ -13,6 +13,7 @@ export default {
     preset: 'smallest'
   },
   external: [
+    'node_modules',
     'fast-glob',
     'node:path',
     'node:process',
