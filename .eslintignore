@@ -3,3 +3,4 @@ bin
 commmands
 coverage
 __tests__
+*.0x
