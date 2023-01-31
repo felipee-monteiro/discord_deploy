@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { cac } from "cac";
+import { cac, CAC } from "cac";
 import { main } from "./src/index.js";
 
-const cli = cac("discord_deploy");
+const cli: CAC = cac("discord_deploy");
 
 cli.command("deploy").action((argvs) => main(argvs)).option(
   "debug",
