@@ -1,4 +1,5 @@
 import { dirname } from 'node:path';
+import { exit } from 'node:process';
 import loading from 'ora';
 import { fileURLToPath } from 'node:url';
 import colors, { ForegroundColorName } from 'ansi-styles';
@@ -56,7 +57,7 @@ export default {
       );
     } else if (level === 'error') {
       spinner().fail('An error was ocurred. use --debug to see the details.');
-      process.exit(1);
+      exit(1);
     }
   },
   __dirname: dirname(__filename),
