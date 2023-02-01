@@ -25,8 +25,10 @@ async function importCommandFiles (filePath: string): Promise<void> {
     _log('Processing: ' + filePath);
     if (fileRequired.data) {
       commandsData.push(fileRequired.data.toJSON());
-    } else {
+    } else if (fileRequired.name) {
       commandsData.push(fileRequired);
+    } else {
+      _log(`File Not Valid: ${filePath}`, 'error');
     }
   } else {
     throw new TypeError(
