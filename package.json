@@ -22,7 +22,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.js",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy --debug --cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot --test",
-    "build": "npx tsc && npx tsup-node",
+    "build": "npx tsup-node",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -37,10 +37,9 @@
   ],
   "tsup": {
     "entry": [
-      "dist/cli.js"
+      "cli.ts"
     ],
     "outDir": "./bin",
-    "allowOverwrite": true,
     "format": "esm",
     "minify": true,
     "splitting": false,
