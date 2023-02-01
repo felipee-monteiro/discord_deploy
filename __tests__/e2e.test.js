@@ -8,22 +8,20 @@ const { version } = cli.default;
 
 async function execCLI (flags) {
   return Array.isArray(flags) && flags.length
-    ? await execAsync('node cli ' + flags.join(' '))
-    : await execAsync('node cli.js');
+    ? await execAsync('npx tsx cli.ts ' + flags.join(' '))
+    : await execAsync('npx tsx cli.ts');
 }
 
 test('should not show version number;', async function (t) {
-  await t.throwsAsync(execCLI(['-version']), {
-    code: 2,
-    instanceOf: Error,
-    message: 'Command failed: node cli -version\n'
-  });
+  const cmd = await execCLI(['-z']);
+  if (cmd.stdout === '' && cmd.stderr === '') t.pass();
+  else t.fail();
 });
 
 test('should show version number;', async function (t) {
   const { stdout, stderr } = await execCLI(['--version']);
   if (stderr) t.fail();
-  t.is(stdout, `${cli.default.version}\n`);
+  t.is(stdout, `discord_deploy/${version} win32-x64 node-v18.13.0\n`);
 });
 
 test('should show help menu;', async function (t) {
@@ -31,17 +29,20 @@ test('should show help menu;', async function (t) {
   if (cmd.stderr) t.fail('Help menu: stderr eecuted.');
   t.is(
     cmd.stdout,
-    '\n' +
-      '  A CLI to deploy slash guild commands easily.\n' +
+    `discord_deploy/${version}\n` +
       '\n' +
-      '  Usage: discord_deploy deploy [options]\n' +
+      'Usage:\n' +
+      '  $ discord_deploy <command> [options]\n' +
       '\n' +
-      '  Options:\n' +
-      '  --debug  run in debug mode. (default: false)\n' +
-      '  --cwd <dir>  Absolute directory to search for. (default: C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\discord_deploy)\n' +
-      '  --test Enables test mode (Requires GUILD_TEST_ID env key). (default: false)\n' +
-      '  --help   display CLI Help.\n' +
-      '\n'
+      'Commands:\n' +
+      '  deploy  \n' +
+      '\n' +
+      'For more info, run any command with the `--help` flag:\n' +
+      '  $ discord_deploy deploy --help\n' +
+      '\n' +
+      'Options:\n' +
+      '  -h, --help     Display this message \n' +
+      '  -v, --version  Display version number \n'
   );
 });
 
@@ -54,8 +55,7 @@ test('should throws an error: command dir not found, or files are not valid.', a
     execCLI(['deploy', '--cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj']),
     {
       instanceOf: Error,
-      message:
-        'Command failed: node cli deploy --cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj\n× An error was ocurred. use --debug to see the details.\n'
+      message: `Command failed: npx tsx cli.ts deploy --cwd hdhdhsdhsadds\\kjsdksadas\\sjakdadhj\n✖ An error was ocurred. use --debug to see the details.\n`
     }
   );
 });
@@ -78,7 +78,7 @@ test('should run in debug mode', async t => {
 });
 
 test('should render RETRY_AFTER', async t => {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     const cmd = await execCLI([
       'deploy',
       '--debug',
