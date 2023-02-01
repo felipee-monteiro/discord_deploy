@@ -4,3 +4,5 @@ commmands
 coverage
 __tests__
 *.0x
+dist
+tsconfig.json
