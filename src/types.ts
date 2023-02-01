@@ -1,8 +1,8 @@
 import type { SlashCommandBuilder } from 'discord.js';
 
 export type SlashCommand = {
-  readonly name: string;
-  readonly description: string;
+  readonly name?: string;
+  readonly description?: string;
   readonly data?: InstanceType<typeof SlashCommandBuilder>;
 };
 
