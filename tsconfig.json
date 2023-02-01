@@ -3,21 +3,25 @@
     "target": "ES2020",
     "module": "ES2020",
     "moduleResolution": "node",
-    "outDir": "./bin",
-    "strict": true,
+    "outDir": "dist",
+    "strict": false,
     "strictFunctionTypes": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "exclude": [
-    "node_modules",
+    "**/node_modules/**",
     "commands",
     "bin",
     "dist",
-    "__tests__"
+    "__tests__",
+    "@types"
   ],
   "include": [
-    "src/**/*.ts",
-    "cli.ts"
+    "src/*.ts",
+    "cli.ts",
+    "**/*.d.ts",
+    "fetch.ts"
   ],
   "files": [
     "cli.ts"
