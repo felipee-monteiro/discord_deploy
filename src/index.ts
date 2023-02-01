@@ -5,7 +5,7 @@ import forEach from 'lodash.foreach';
 import normalize from 'normalize-path';
 import { config } from 'dotenv';
 import fetch from 'node-fetch';
-import utils from './utils.js';
+import utils from './utils';
 import type {
   FetchDiscordError,
   SlashCommand,
