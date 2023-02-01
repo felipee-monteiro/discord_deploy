@@ -61,7 +61,7 @@ async function deploy (isTestEnabled: boolean = false): Promise<boolean | void> 
       );
       if (Array.isArray(responseJSON)) {
         forEach(responseJSON, (slashcmd: SlashCommandResponse) =>
-          loadingSpinner.succeed('Deployed: /' + slashcmd.id)
+          loadingSpinner.succeed('Deployed: /' + slashcmd.name)
         );
         loadingSpinner.stop();
         exit(0);
