@@ -37,9 +37,9 @@
   ],
   "tsup": {
     "entry": [
-      "bin/cli.js"
+      "dist/cli.js"
     ],
-    "outdir": "./bin",
+    "outDir": "./bin",
     "allowOverwrite": true,
     "format": "esm",
     "minify": true,
