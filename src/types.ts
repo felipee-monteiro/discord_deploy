@@ -30,6 +30,7 @@ export type FetchDiscordError = {
 };
 
 export type Options = Partial<{
+  readonly '--': Array<any>;
   readonly cwd: string;
   readonly debug: boolean;
   readonly test: boolean;
