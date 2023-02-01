@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { cac, CAC } from 'cac';
-import { main } from './src/index.js';
+import { main } from './src';
 
 const cli: CAC = cac('discord_deploy');
 
