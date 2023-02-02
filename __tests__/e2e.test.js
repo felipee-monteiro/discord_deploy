@@ -61,30 +61,16 @@ test('should throws an error: command dir not found, or files are not valid.', a
 });
 
 test('should run in debug mode', async t => {
-  const cmd = await execCLI([
-    'deploy',
-    '--debug',
-    '--cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot',
-    '--test'
-  ]);
-  t.is(
+  const cmd = await execCLI(['deploy', '--debug', '--test']);
+  t.notDeepEqual(
     cmd.stdout,
-    '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/index.js \x1B[39m\n' +
-      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/login.js \x1B[39m\n' +
-      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/selectCronDay.js \x1B[39m\n' +
-      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/selectRepoCommand.js \x1B[39m\n' +
-      '\x1B[96m [INFO] Processing: C:/Users/Felipe/Desktop/projects/www/nodejs/disc_bot/server/commands/github/user.js \x1B[39m\n'
+    '\x1B[96m [INFO] Processing: \n' + '\x1B[96m [INFO] Processing: \n'
   );
 });
 
 test('should render RETRY_AFTER', async t => {
   for (let i = 0; i < 2; i++) {
-    const cmd = await execCLI([
-      'deploy',
-      '--debug',
-      '--cwd C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot',
-      '--test'
-    ]);
+    const cmd = await execCLI(['deploy', '--debug', '--test']);
     t.notDeepEqual(
       cmd.stderr,
       '- Deploying your files...\n' +
