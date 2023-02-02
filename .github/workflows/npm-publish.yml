@@ -8,22 +8,15 @@ on:
     types: [created]
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node_version: ['14', '16', '18']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: 16
       - run: npm install
       - run: npm run build
       - run: npm run test:e2e
-  strategy:
-      matrix:
-        node: [ 14, 16, 18 ]
 
   publish-npm:
     needs: build
