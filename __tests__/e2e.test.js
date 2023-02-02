@@ -74,7 +74,7 @@ test('should render RETRY_AFTER', async t => {
     t.notDeepEqual(
       cmd.stderr,
       '- Deploying your files...\n' +
-        '⚠ RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\n'
+      '⚠ RATE_LIMIT_EXCEDED (https://discord.com/developers/docs/topics/rate-limits#rate-limits)\n'
     );
   }
 });
