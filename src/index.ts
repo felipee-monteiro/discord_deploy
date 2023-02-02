@@ -14,7 +14,7 @@ import type {
 } from './types';
 
 const { _log, __dirname, spinner } = utils;
-const loadingSpinner = spinner('Deploying your files...');
+const loadingSpinner = spinner();
 const commandsData: SlashCommand[] = [];
 
 async function importCommandFiles (filePath: string): Promise<void> {
