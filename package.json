@@ -9,7 +9,7 @@
     "discord_deploy": "./bin/cli.js"
   },
   "files": [
-    "./bin",
+    "./bin/cli.js",
     "LICENSE",
     "README.md"
   ],
