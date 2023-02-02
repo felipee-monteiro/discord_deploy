@@ -13,7 +13,6 @@
   "exclude": [
     "**/node_modules/**",
     "commands",
-    "bin",
     "dist",
     "__tests__",
     "@types"
