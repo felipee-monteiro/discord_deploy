@@ -6,3 +6,4 @@ __tests__
 *.0x
 dist
 tsconfig.json
+jest.config.js
