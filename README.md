@@ -1,5 +1,7 @@
 ### First of all, thank you guys for installing !
 
+### A CLI to deploy slash guild commands easily.
+
 ### Before Start
 
 - "TOKEN" and "GUILD_ID" env variables are required. (GUILD_TEST_ID is required in test mode);
@@ -54,7 +56,7 @@ With one command, you are done to deploy slash commands easily.
 
 #### Tiny:
 
-Just 2.84KB (main file).
+Just 2.8KB (main file).
 
 #### Supports CommonJS and ESM files.
 
