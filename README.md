@@ -1,6 +1,6 @@
 ### First of all, thank you guys for installing !
 
-### A CLI to deploy slash guild commands easily.
+> A CLI to deploy slash guild commands easily.
 
 ### Before Start
 
