@@ -15,7 +15,7 @@
     "commands",
     "dist",
     "__tests__",
-    "@types"
+    "bin"
   ],
   "include": [
     "src/*.ts",
