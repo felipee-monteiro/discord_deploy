@@ -40,7 +40,8 @@ const LOG_LEVELS: LogLevels[] = [
 ];
 
 const debugMode = process.argv.some(arg => arg === '--debug');
-const __filename: string = fileURLToPath(import.meta.url);
+const __filename: (filename: string) => string = filename =>
+  fileURLToPath(filename);
 
 export default {
   _log: function (
@@ -60,6 +61,7 @@ export default {
       exit(1);
     }
   },
-  __dirname: dirname(__filename),
+  __filename,
+  __dirname: filename => dirname(__filename(filename)),
   spinner
 };

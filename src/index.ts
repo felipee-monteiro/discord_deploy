@@ -20,7 +20,7 @@ const commandsData: SlashCommand[] = [];
 async function importCommandFiles (filePath: string): Promise<void> {
   if (filePath.length) {
     const fileRequired: SlashCommand = await import(
-      normalize(relative(__dirname, filePath))
+      normalize(relative(__dirname(import.meta.url), filePath))
     ).then(module => module.default);
     _log('Processing: ' + filePath);
     if (fileRequired.data) {
@@ -32,7 +32,7 @@ async function importCommandFiles (filePath: string): Promise<void> {
     }
   } else {
     throw new TypeError(
-      `filePath must be a Valid String. Received: ${filePath.length}`
+      `filePath must be a Valid String. Received string length: ${filePath.length}`
     );
   }
 }
