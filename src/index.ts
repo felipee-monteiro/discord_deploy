@@ -42,7 +42,8 @@ async function deploy(isTestEnabled: boolean = false): Promise<boolean | void> {
     isTestEnabled && "GUILD_TEST_ID" in env
       ? env["GUILD_TEST_ID"]
       : env["GUILD_ID"];
-  if (guild_id && commandsData.length) {
+  const botToken = env["BOT_TOKEN"];
+  if (guild_id && commandsData.length && botToken) {
     try {
       loadingSpinner.start();
       const responseJSON = await fetch(
@@ -50,7 +51,7 @@ async function deploy(isTestEnabled: boolean = false): Promise<boolean | void> {
         {
           method: "PUT",
           headers: {
-            Authorization: `Bot ${env["TOKEN"]}`,
+            Authorization: `Bot ${botToken}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(commandsData),
@@ -89,7 +90,7 @@ async function deploy(isTestEnabled: boolean = false): Promise<boolean | void> {
     }
   } else {
     _log(
-      'PLease verify your .env file, and if "commands" directory exists anywhere in your project with valid commands files',
+      'PLease verify your env file, and if "commands" directory exists anywhere in your project with valid commands files',
       "error"
     );
     return false;
