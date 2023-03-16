@@ -43,7 +43,7 @@ async function deploy(isTestEnabled: boolean = false): Promise<boolean | void> {
       ? env["GUILD_TEST_ID"]
       : env["GUILD_ID"];
   const botToken = env["BOT_TOKEN"];
-  if (guild_id && commandsData.length && botToken) {
+  if (guild_id.length && commandsData.length && botToken.length) {
     try {
       loadingSpinner.start();
       const responseJSON = await fetch(
