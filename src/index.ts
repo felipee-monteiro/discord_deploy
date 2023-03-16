@@ -117,7 +117,7 @@ async function main(options: Options): Promise<void> {
     debug: options.debug,
   });
   if (isLoaded.error) {
-    _log("PLease verify your .env file", "error");
+    _log('PLease verify your .env file, or if cwd path exists.', "error");
   } else {
     await getCommandFiles(options);
   }
