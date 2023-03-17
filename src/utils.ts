@@ -1,7 +1,4 @@
-import { dirname } from "node:path";
-import { exit } from "node:process";
 import loading from "ora";
-import { fileURLToPath } from "node:url";
 import colors, { ForegroundColorName } from "ansi-styles";
 
 interface LogLevels {
@@ -54,6 +51,5 @@ export default {
       );
     }
   },
-  __dirname: (filename: string) => dirname(fileURLToPath(filename)),
   spinner,
 };
