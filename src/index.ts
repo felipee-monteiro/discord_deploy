@@ -1,8 +1,10 @@
-import { relative, resolve } from "node:path";
+import { resolve } from "node:path";
 import { cwd, env, exit } from "node:process";
+import { pathToFileURL } from "node:url";
+import * as esbuild from "esbuild";
 import glob from "fast-glob";
 import forEach from "lodash.foreach";
-import normalize from "normalize-path";
+import map from "lodash.map";
 import { config } from "dotenv";
 import fetch from "node-fetch";
 import utils from "./utils";
@@ -13,22 +15,27 @@ import type {
   SlashCommandResponse,
 } from "./types";
 
-const { _log, __dirname, spinner } = utils;
+const { _log, spinner } = utils;
 const loadingSpinner = spinner();
-const commandsData: SlashCommand[] = [];
+let opt: Options = {};
 
-async function importCommandFiles(filePath: string): Promise<void> {
+async function buildCommandFiles(filePath: string): Promise<void> {
   if (filePath.length) {
-    const fileRequired: SlashCommand = await import(
-      normalize(relative(__dirname(import.meta.url), filePath))
-    ).then((module) => module.default);
-    _log("Processing: " + filePath);
-    if (fileRequired.data) {
-      commandsData.push(fileRequired.data.toJSON());
-    } else if (fileRequired.name) {
-      commandsData.push(fileRequired);
-    } else {
-      _log(`File Not Valid: ${filePath}`, "error");
+    try {
+      _log("Processing: " + filePath);
+      await esbuild.build({
+        entryPoints: [filePath],
+        allowOverwrite: true,
+        target: "node16",
+        format: "esm",
+        bundle: true,
+        minify: true,
+        outdir: "build",
+        write: true,
+        packages: "external",
+      });
+    } catch (e: any) {
+      _log(e.message, "error");
     }
   } else {
     throw new TypeError(
@@ -37,12 +44,29 @@ async function importCommandFiles(filePath: string): Promise<void> {
   }
 }
 
-async function deploy(isTestEnabled: boolean = false): Promise<boolean | void> {
+async function importCommandFiles() {
+  const cmdFiles = await glob("build/**/*.js", {
+    absolute: true,
+    ignore: ["node_modules"],
+  });
+  const commandsData = await Promise.all(map(cmdFiles, async (filePath: string) => {
+    const fileRequired: SlashCommand = await import(
+      pathToFileURL(filePath).href
+    ).then((module) => module.default);
+    if (fileRequired.data) {
+      return fileRequired.data.toJSON();
+    } else if (fileRequired.name) {
+      return fileRequired;
+    }
+  }));
+  deploy(commandsData);
+}
+
+async function deploy(commandsData: SlashCommand[]): Promise<boolean | void> {
   const guild_id =
-    isTestEnabled && "GUILD_TEST_ID" in env
-      ? env["GUILD_TEST_ID"]
-      : env["GUILD_ID"];
+    opt.test && "GUILD_TEST_ID" in env ? env["GUILD_TEST_ID"] : env["GUILD_ID"];
   const botToken = env["BOT_TOKEN"];
+
   if (guild_id.length && commandsData.length && botToken.length) {
     try {
       loadingSpinner.start();
@@ -97,18 +121,18 @@ async function deploy(isTestEnabled: boolean = false): Promise<boolean | void> {
   }
 }
 
-async function getCommandFiles({ cwd, test }: Options): Promise<void> {
-  const files = glob.stream("**/commands/**/*.{js,cjs,mjs}", {
-    cwd,
+async function getCommandFiles(): Promise<void> {
+  const files = glob.stream("**/commands/**/*.{js,cjs,mjs,ts}", {
+    cwd: opt.cwd,
     absolute: true,
   });
-  files.on("data", async (filePath: Buffer) => {
+  files.on("readable", async () => {
     files.pause();
-    await importCommandFiles(filePath.toString());
+    await buildCommandFiles(files.read().toString());
     files.resume();
   });
   files.on("error", (error) => _log(error, "error"));
-  files.on("end", async () => await deploy(test));
+  files.on("end", importCommandFiles);
 }
 
 async function main(options: Options): Promise<void> {
@@ -117,10 +141,11 @@ async function main(options: Options): Promise<void> {
     debug: options.debug,
   });
   if (isLoaded.error) {
-    _log('PLease verify your .env file, or if cwd path exists.', "error");
+    _log("PLease verify your .env file, or if cwd path exists.", "error");
   } else {
-    await getCommandFiles(options);
+    opt = Object.assign(options, opt);
+    await getCommandFiles();
   }
 }
 
-export { deploy, getCommandFiles, importCommandFiles, main };
+export { deploy, getCommandFiles, buildCommandFiles, main };
