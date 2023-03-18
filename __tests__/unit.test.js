@@ -5,7 +5,6 @@ import {
   getCommandFiles,
   main
 } from '../src/index.js';
-import utils from '../src/utils.js';
 import { jest } from '@jest/globals';
 
 const MOCK = {
@@ -66,9 +65,4 @@ test('should not run', () => {
 
 it('should run in debug mode', async () => {
   expect(main({ debug: true, ...MOCK })).resolves.toBe(undefined);
-});
-
-test('should logs FATAL error', async () => {
-  // commandsData.length = 0;
-  // expect(deploy()).to;
 });
