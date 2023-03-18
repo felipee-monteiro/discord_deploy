@@ -14,6 +14,7 @@ import type {
   Options,
   SlashCommandResponse,
 } from "./types";
+import { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 
 const { _log, spinner } = utils;
 const loadingSpinner = spinner();
@@ -61,15 +62,21 @@ async function importCommandFiles() {
       }
     })
   );
+  // @ts-ignore
   deploy(commandsData);
 }
 
-async function deploy(commandsData: SlashCommand[]): Promise<boolean | void> {
+async function deploy(
+  commandsData: (
+    | SlashCommand
+    | RESTPostAPIChatInputApplicationCommandsJSONBody
+  )[]
+): Promise<boolean | void> {
   const guild_id =
     opt.test && "GUILD_TEST_ID" in env ? env["GUILD_TEST_ID"] : env["GUILD_ID"];
   const botToken = env["BOT_TOKEN"];
 
-  if (guild_id.length && commandsData.length && botToken.length) {
+  if (guild_id?.length && commandsData.length && botToken?.length) {
     try {
       loadingSpinner.start();
       const responseJSON = await fetch(
