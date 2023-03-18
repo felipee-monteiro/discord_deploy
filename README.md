@@ -58,7 +58,7 @@ With one command, you are done to deploy slash commands easily.
 
 #### Tiny:
 
-Just 2.77KB (main file).
+Just 2.95KB.
 
 #### Supports CommonJS and ESM files.
 
