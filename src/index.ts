@@ -3,6 +3,7 @@ import { cwd, env, exit } from "node:process";
 import { pathToFileURL } from "node:url";
 import * as esbuild from "esbuild";
 import glob from "fast-glob";
+import { pathExists } from "fs-extra";
 import forEach from "lodash.foreach";
 import map from "lodash.map";
 import { config } from "dotenv";
@@ -14,14 +15,14 @@ import type {
   Options,
   SlashCommandResponse,
 } from "./types";
-import { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
+import type { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 
 const { _log, spinner } = utils;
 const loadingSpinner = spinner();
 let opt: Options = {};
 
 async function buildCommandFiles(filePath: string): Promise<void> {
-  if (filePath.length) {
+  if (filePath.length && (await pathExists(filePath))) {
     try {
       _log("Processing: " + filePath);
       await esbuild.build({
@@ -39,9 +40,7 @@ async function buildCommandFiles(filePath: string): Promise<void> {
       _log(e.message, "error");
     }
   } else {
-    throw new TypeError(
-      `filePath must be a Valid String. Received string length: ${filePath.length}`
-    );
+    throw new TypeError("filePath must be Valid.");
   }
 }
 
@@ -64,6 +63,7 @@ async function importCommandFiles() {
   );
   // @ts-ignore
   deploy(commandsData);
+  return commandsData;
 }
 
 async function deploy(
@@ -144,17 +144,22 @@ async function getCommandFiles(): Promise<void> {
   files.on("end", importCommandFiles);
 }
 
-async function main(options: Options): Promise<void> {
-  const isLoaded = config({
-    path: resolve(options.cwd || cwd(), ".env"),
-    debug: options.debug,
-  });
-  if (isLoaded.error) {
-    _log("PLease verify your .env file, or if cwd path exists.", "error");
+async function main(options: Options): Promise<boolean | void> {
+  if (options.cwd && (await pathExists(options.cwd))) {
+    const isLoaded = config({
+      path: resolve(options.cwd, ".env"),
+      debug: options.debug,
+    });
+    if (isLoaded.error) {
+      _log("PLease verify your .env file.", "error");
+    } else {
+      opt = Object.assign(options, opt);
+      await getCommandFiles();
+    }
   } else {
-    opt = Object.assign(options, opt);
-    await getCommandFiles();
+    _log("Please verify cwd.", "error");
+    throw new TypeError("Options is required.");
   }
 }
 
-export { deploy, getCommandFiles, buildCommandFiles, main };
+export { deploy, getCommandFiles, buildCommandFiles, importCommandFiles, main };
