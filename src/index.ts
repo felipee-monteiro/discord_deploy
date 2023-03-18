@@ -49,16 +49,18 @@ async function importCommandFiles() {
     absolute: true,
     ignore: ["node_modules"],
   });
-  const commandsData = await Promise.all(map(cmdFiles, async (filePath: string) => {
-    const fileRequired: SlashCommand = await import(
-      pathToFileURL(filePath).href
-    ).then((module) => module.default);
-    if (fileRequired.data) {
-      return fileRequired.data.toJSON();
-    } else if (fileRequired.name) {
-      return fileRequired;
-    }
-  }));
+  const commandsData = await Promise.all(
+    map(cmdFiles, async (filePath: string) => {
+      const fileRequired: SlashCommand = await import(
+        pathToFileURL(filePath).href
+      ).then((module) => module.default);
+      if (fileRequired.data) {
+        return fileRequired.data.toJSON();
+      } else if (fileRequired.name) {
+        return fileRequired;
+      }
+    })
+  );
   deploy(commandsData);
 }
 
@@ -107,7 +109,9 @@ async function deploy(commandsData: SlashCommand[]): Promise<boolean | void> {
         forEach(Object.keys(items), (key: string): void => {
           forEach(items[key]["_errors"], (log) => _log(log.message, "error"));
         });
-      } else _log(`REQUEST_FAILED`, "error");
+      } else {
+        _log(`REQUEST_FAILED`, "error");
+      }
     } catch (e) {
       loadingSpinner.stop();
       _log("FATAL: " + e, "error");
@@ -127,9 +131,7 @@ async function getCommandFiles(): Promise<void> {
     absolute: true,
   });
   files.on("readable", async () => {
-    files.pause();
     await buildCommandFiles(files.read().toString());
-    files.resume();
   });
   files.on("error", (error) => _log(error, "error"));
   files.on("end", importCommandFiles);
