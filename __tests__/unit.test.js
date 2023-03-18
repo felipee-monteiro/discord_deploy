@@ -1,68 +1,84 @@
 import {
   importCommandFiles,
   deploy,
-  commandsData,
+  buildCommandFiles,
   getCommandFiles,
-  main
-} from '../src/index.js';
-import { jest } from '@jest/globals';
+  main,
+} from "../dist/src/index";
+import { jest } from "@jest/globals";
+import { cwd } from "process";
 
-const MOCK = {
-  test: true,
-  cwd: 'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot'
-};
+const commandsData = new Array();
 
-test('should not accept empty filePath', async () => {
-  await importCommandFiles().catch(e =>
-    expect(e.message).toMatch('filePath must be a String. Received: undefined')
+test("should not accept invalid filePath", async () => {
+  await buildCommandFiles("").catch((e) =>
+    expect(e.message).toMatch("filePath must be Valid.")
   );
-});
-
-test('should not accept incorrect filePath', async () => {
-  await importCommandFiles('jdhfkjsdhfksdjf').catch(e =>
-    expect(e.message).toMatch(
-      "Cannot find module '../jdhfkjsdhfksdjf' from 'src/index.js'"
-    )
+  await buildCommandFiles("jsdkhajkdkjsdhdsadll").catch((e) =>
+    expect(e.message).toMatch("filePath must be Valid.")
   );
+  await buildCommandFiles(
+    "C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot"
+  ).catch((e) => expect(e.message).toMatch("filePath must be Valid."));
 });
 
-test('should accept filePath', () => {
-  expect(
-    importCommandFiles(
-      'C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot\\server\\commands\\github\\login.js'
-    )
-  ).resolves.toBe(undefined);
-});
-
-test('should deploy', async () => {
-  commandsData.length = 0;
+test("should not return an undefined array", async () => {
   commandsData.push({
-    name: 'teste',
-    description: 'testando o teste'
+    name: "teste",
+    description: "testando o teste",
+  });
+  expect(importCommandFiles()).resolves.not.toBe(undefined);
+});
+
+test("should not accept filePath", () => {
+  expect(
+    buildCommandFiles(
+      "C:\\Users\\Felipe\\Desktop\\projects\\www\\nodejs\\disc_bot\\server\\commands\\github\\login.js"
+    )
+  ).rejects.toThrow(TypeError("filePath must be Valid."));
+});
+
+test("should deploy", async () => {
+  commandsData.push({
+    name: "teste",
+    description: "testando o teste",
   });
   jest.useFakeTimers();
-  expect(deploy(true)).resolves.toBe(undefined);
+  expect(deploy(commandsData)).resolves.toBe(false);
 });
 
-test('should not deploy', () => {
+test("should not deploy", () => {
   commandsData.length = 0;
-  expect(deploy(true)).resolves.toBe(false);
+  expect(deploy(commandsData)).resolves.toBe(false);
 });
 
-test('should get all files', () => {
+test("should get all files", () => {
   jest.useFakeTimers();
-  expect(getCommandFiles(MOCK)).resolves.toBe(undefined);
+  expect(getCommandFiles()).resolves.toBe(undefined);
   jest.clearAllTimers();
 });
 
-test('should run', () => {
-  expect(main(MOCK)).resolves.toBe(undefined);
+test("should run", () => {
+  jest.useFakeTimers();
+  expect(
+    main({
+      test: true,
+      cwd: cwd(),
+    })
+  ).resolves.toBe(undefined);
+  jest.clearAllTimers();
 });
 
-test('should not run', () => {
+test("should not run", () => {
+  jest.useFakeTimers();
   expect(main()).rejects.toThrow(TypeError);
+  jest.clearAllTimers();
 });
 
-it('should run in debug mode', async () => {
-  expect(main({ debug: true, ...MOCK })).resolves.toBe(undefined);
+it("should run in debug mode", async () => {
+  jest.useFakeTimers();
+  expect(main({ debug: true, test: true, cwd: cwd() })).resolves.toBe(
+    undefined
+  );
+  jest.clearAllTimers();
 });
