@@ -22,7 +22,7 @@
     "test:unit": "set NODE_OPTIONS=--experimental-vm-modules && set NODE_ENV=test && npx jest unit.test.ts",
     "lint": "eslint .",
     "prod": "node bin\\cli.js deploy",
-    "build": "npx tsup-node",
+    "build": "tsc && npx tsup-node",
     "prepack": "npm run build"
   },
   "keywords": [
@@ -52,7 +52,9 @@
   "devDependencies": {
     "@jest/globals": "^29.4.1",
     "@types/lodash.foreach": "^4.5.7",
+    "@types/lodash.map": "^4.6.13",
     "@types/node": "^18.11.18",
+    "@types/node-fetch": "^2.6.2",
     "@types/normalize-path": "^3.0.0",
     "ansi-styles": "^6.2.1",
     "ava": "^5.1.1",
