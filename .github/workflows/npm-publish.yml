@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install -D typescript@latest
+      - run: npm install -D tsup
       - run: npm run build
   publish-npm:
     needs: build
