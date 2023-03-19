@@ -55,6 +55,7 @@ module.exports = {
 #### Simple:
 
 With one command, you are done to deploy slash commands easily.
+Supports TypeScript Command Files with the power of [esbuild](https://github.com/evanw/esbuild)
 
 #### Tiny:
 
