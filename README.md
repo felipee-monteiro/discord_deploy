@@ -10,9 +10,8 @@
 - "commands" directory must exists anywhere in your project.
 - GUILD_TEST_ID should exists in test mode, otherwise GUILD_ID will be used.
 
-
 If you are using Discord.js, each command must export an object with have 'data' property, witch contains the instance of command builder.
-  in case of eris.js, you can pass an object containing some properties. see the examples below:
+in case of eris.js, you can pass an object containing some properties. see the examples below:
 
 Example (Discord.js):
 
@@ -78,11 +77,18 @@ Uses streams and dynamic imports to support large files on demand.
 ### Usage
 
 ```bash
-  discord_deploy deploy [options]
+  Usage:
+    $ discord_deploy <command> [options]
 
-  Options:
-    -d, --debug  run in debug mode. (default: false)
-    --cwd <dir>  Absolute directory to search for. (default: process.cwd())
-    --test       Enables test mode (Requires GUILD_TEST_ID env key). (default: false)
-    -h, --help   display CLI Help.
+    Commands:
+      deploy
+      clear   clear esbuild cache.
+
+    For more info, run any command with the `--help` flag:
+      $ discord_deploy deploy --help
+      $ discord_deploy clear --help
+
+    Options:
+      -h, --help     Display this message
+      -v, --version  Display version number
 ```
