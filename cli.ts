@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 import { cac, CAC } from "cac";
 import { main } from "./src";
-import type { Options } from "./src/types";
+import { cwd } from "node:process";
 import { version } from "./package.json";
 
 const cli: CAC = cac("discord_deploy");
 
 cli
   .command("deploy")
-  .action((argvs: Options) => main(argvs))
+  .action(main)
   .option("debug", "run in debug mode.", {
     default: false,
   })
   .option("cwd <dir>", "Absolute directory to search for.", {
-    default: process.cwd(),
+    default: cwd(),
     type: ["string"],
   })
-  .option("test", "Enables test mode (Requires GUILD_TEST_ID env key).", {
+  .option("test", "Enables test mode.", {
     default: false,
   });
 cli.help();
