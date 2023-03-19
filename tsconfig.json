@@ -5,7 +5,6 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "resolveJsonModule": true,
-    "checkJs": true,
     "strict": true,
     "strictFunctionTypes": true,
     "allowSyntheticDefaultImports": true,
@@ -16,13 +15,13 @@
     "commands",
     "dist",
     "__tests__",
+    "coverage",
+    "build",
     "bin"
   ],
   "include": [
     "src/*.ts",
     "cli.ts",
-    "**/*.d.ts",
-    "fetch.ts"
   ],
   "files": [
     "cli.ts"
