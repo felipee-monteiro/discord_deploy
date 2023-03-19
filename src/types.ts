@@ -34,4 +34,5 @@ export type Options = Partial<{
   readonly cwd: string;
   readonly debug: boolean;
   readonly test: boolean;
+  readonly clear: boolean;
 }>;
