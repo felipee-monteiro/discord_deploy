@@ -2,6 +2,8 @@
 
 > A CLI to deploy slash guild commands easily.
 
+### TypeScript Support is Experimental.
+
 ### Before Start
 
 - "BOT_TOKEN", "GUILD_ID" and "CLIENT_ID" env variables are required;
