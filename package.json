@@ -1,6 +1,6 @@
 {
   "name": "discord_deploy",
-  "version": "2.1.0",
+  "version": "2.0.0",
   "readme": "./README.md",
   "repository": {
     "url": "https://github.com/felipee-monteiro/discord_deploy"

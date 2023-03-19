@@ -148,7 +148,7 @@ async function getCommandFiles(): Promise<void> {
 }
 
 async function main(options: Options): Promise<boolean | void> {
-  if (options.cwd && (await pathExists(options.cwd))) {
+  if (options && options.cwd && (await pathExists(options.cwd))) {
     const isLoaded = config({
       path: resolve(options.cwd, '.env'),
       debug: options.debug,

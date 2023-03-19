@@ -29,16 +29,18 @@ test('should show help menu;', async function (t) {
   if (cmd.stderr) t.fail('Help menu: stderr eecuted.');
   t.is(
     cmd.stdout,
-    `discord_deploy/${version}\n` +
+    'discord_deploy/2.1.0\n' +
       '\n' +
       'Usage:\n' +
       '  $ discord_deploy <command> [options]\n' +
       '\n' +
       'Commands:\n' +
       '  deploy  \n' +
+      '  clear   clear esbuild cache.\n' +
       '\n' +
       'For more info, run any command with the `--help` flag:\n' +
       '  $ discord_deploy deploy --help\n' +
+      '  $ discord_deploy clear --help\n' +
       '\n' +
       'Options:\n' +
       '  -h, --help     Display this message \n' +
