@@ -1,5 +1,5 @@
 import { resolve } from "node:path";
-import { cwd, env, exit } from "node:process";
+import { env, exit } from "node:process";
 import { pathToFileURL } from "node:url";
 import * as esbuild from "esbuild";
 import glob from "fast-glob";
@@ -136,6 +136,7 @@ async function getCommandFiles(): Promise<void> {
   const files = glob.stream("**/commands/**/*.{js,cjs,mjs,ts}", {
     cwd: opt.cwd,
     absolute: true,
+    ignore: ['node_modules']
   });
   files.on("readable", async () => {
     await buildCommandFiles(files.read().toString());
