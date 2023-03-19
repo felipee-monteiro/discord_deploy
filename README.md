@@ -61,7 +61,7 @@ Supports TypeScript Command Files with the power of [esbuild](https://github.com
 
 #### Tiny:
 
-Just 2.95KB.
+Just 3.49KB.
 
 #### Supports CommonJS and ESM files.
 
