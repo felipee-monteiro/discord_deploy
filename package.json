@@ -41,7 +41,7 @@
     "ansi-styles": "^6.2.1",
     "cac": "^6.7.14",
     "dotenv": "^16.0.3",
-    "esbuild": "^0.17.12",
+    "esbuild": "^0.25.0",
     "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.0",
     "lodash.foreach": "^4.5.0",
