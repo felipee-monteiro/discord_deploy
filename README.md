@@ -1,3 +1,5 @@
+
+
 ### First of all, thank you guys for installing !
 
 > A CLI to deploy slash guild commands easily.
@@ -9,6 +11,7 @@
 - "BOT_TOKEN", "GUILD_ID" and "CLIENT_ID" env variables are required;
 - "commands" directory must exists anywhere in your project.
 - GUILD_TEST_ID should exists in test mode, otherwise GUILD_ID will be used.
+- Use the `--test` flag with `deploy` to enable test mode.
 
 If you are using Discord.js, each command must export an object with have 'data' property, witch contains the instance of command builder.
 in case of eris.js, you can pass an object containing some properties. see the examples below:
