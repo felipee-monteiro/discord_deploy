@@ -21,7 +21,7 @@ Example (Discord.js):
 ```js
 // commands/example01.js
 module.exports = {
-  data: new SlashCommmandBuilder(),
+  data: new SlashCommandBuilder(),
   ...
 };
 ```
@@ -29,7 +29,7 @@ module.exports = {
 ```js
  // commands/example01.mjs
  export default {
-   data: new SlashCommmandBuilder(),
+   data: new SlashCommandBuilder(),
    ...
  };
 ```
